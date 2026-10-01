@@ -53,10 +53,6 @@ body::after{width:460px;height:460px;background:rgba(236,72,153,.12);bottom:-160
 .cover{width:100%;max-width:820px;height:312px;margin:0 auto 22px;border:2px dashed #cbd5e1;border-radius:20px;background:#f8fafc;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#64748b;font-size:.95rem;font-weight:600;overflow:hidden;position:relative;padding:16px}
 .cover img{width:100%;height:100%;object-fit:cover;border-radius:16px;position:absolute;top:0;left:0}
 .cover .ph{position:relative;z-index:2}
-.cover-btn{margin-top:12px;padding:9px 18px;background:#fff;border:1px solid var(--stroke2);border-radius:12px;cursor:pointer;font-weight:700;color:var(--text);transition:.2s;display:inline-flex;align-items:center;gap:8px;position:relative;z-index:2}
-.cover-btn:hover{background:#f1f5f9;border-color:var(--acc)}
-
-/* MATCHING — fixed with event delegation */
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .mitem{background:#fff;border:1px solid var(--stroke2);border-radius:14px;padding:12px 14px;cursor:pointer;transition:.2s;font-size:.95rem;user-select:none}
 .mitem:hover{transform:translateY(-2px);border-color:var(--acc);box-shadow:0 8px 20px -14px rgba(28,35,64,.4)}
@@ -64,7 +60,6 @@ body::after{width:460px;height:460px;background:rgba(236,72,153,.12);bottom:-160
 .mitem.paired{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 .mitem.ok{border-color:var(--ok);background:#ecfdf5;color:#065f46}
 .mitem.bad{border-color:var(--err);background:#fef2f2;color:#991b1b}
-
 .line{background:#f8fafd;border:1px solid var(--stroke);border-radius:14px;padding:14px 16px;margin-bottom:12px;font-size:.98rem;line-height:1.7}
 .wide{width:100%;margin-top:8px}
 textarea.inp{min-height:110px;resize:vertical;line-height:1.6}
@@ -73,20 +68,16 @@ textarea.inp{min-height:110px;resize:vertical;line-height:1.6}
 .card[data-a="l"] .gap-inp:focus,.card[data-a="r"] .gap-inp:focus,.card[data-a="p"] .gap-inp:focus{outline:none;border-bottom-color:#8b5cf6;background:rgba(139,92,246,.06)}
 .card[data-a="l"] .gap-inp.ok,.card[data-a="r"] .gap-inp.ok,.card[data-a="p"] .gap-inp.ok{border-bottom-color:var(--ok);background:rgba(16,185,129,.08)}
 .card[data-a="l"] .gap-inp.bad,.card[data-a="r"] .gap-inp.bad,.card[data-a="p"] .gap-inp.bad{border-bottom-color:var(--err);background:rgba(239,68,68,.08)}
-
-/* Group chat for Ex 2.1 */
 .group-chat{max-width:480px;margin:0 auto 22px;border:1px solid var(--stroke);border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 14px 44px -28px rgba(28,35,64,.3)}
 .gc-header{background:linear-gradient(135deg,#8b5cf6,#7c3aed);color:#fff;padding:14px 18px;font-weight:700;font-size:.95rem}
 .gc-body{padding:18px;background:#f5f3ff;display:flex;flex-direction:column;gap:12px}
 .gc-msg{max-width:82%;padding:11px 15px;font-size:.93rem;line-height:1.55;position:relative}
 .gc-msg.left{align-self:flex-start;background:#fff;border:1px solid var(--stroke);border-radius:18px;border-bottom-left-radius:6px}
 .gc-msg.right{align-self:flex-end;background:#ede9fe;border:1px solid #ddd6fe;border-radius:18px;border-bottom-right-radius:6px}
-/* Jay messages: same bubble shape as left/right, just green-tinted */
 .gc-msg.jay{align-self:center;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:18px;border-bottom-left-radius:6px}
 .gc-name{font-weight:700;font-size:.8rem;margin-bottom:4px;display:block}
 .gc-name.alex{color:#7c3aed}.gc-name.mia{color:#059669}.gc-name.jay{color:#0284c7}
 .gc-hl{background:linear-gradient(transparent 55%,#fde68a 55%);padding:0 2px;font-weight:700}
-
 .word-bank{display:flex;flex-wrap:wrap;gap:10px;background:#fffbeb;border:1px dashed #fde68a;border-radius:16px;padding:16px;margin-bottom:20px;min-height:70px;align-items:center;justify-content:center}
 .drag-word{padding:8px 16px;border-radius:99px;background:#fff;border:1px solid #fcd34d;color:#92400e;cursor:grab;font-weight:700;font-size:.92rem;user-select:none;transition:.2s;box-shadow:0 2px 6px rgba(0,0,0,.05)}
 .drag-word:active{cursor:grabbing;transform:scale(1.05)}
@@ -132,15 +123,12 @@ textarea.inp{min-height:110px;resize:vertical;line-height:1.6}
 .cmp-table input:focus{outline:none;background:#f8fafd}
 .cmp-table input.ok{border-bottom-color:var(--ok);background:#ecfdf5}
 .cmp-table input.bad{border-bottom-color:var(--err);background:#fef2f2}
-
-/* Pastel yellow cards for Ex 4.4 */
 .reply-card{background:#fffbeb;border:1px solid #fde68a;border-radius:18px;padding:18px 20px;margin-bottom:14px}
 .reply-card .rc-num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.85rem;color:#92400e;margin-bottom:10px}
 .reply-line{margin-bottom:8px;font-size:.97rem;line-height:1.7}
 .reply-line:last-child{margin-bottom:0}
 .reply-speaker{display:inline-block;width:22px;height:22px;border-radius:6px;text-align:center;line-height:22px;font-size:.75rem;font-weight:800;color:#fff;margin-right:6px;vertical-align:middle}
 .reply-speaker.a{background:#8b5cf6}.reply-speaker.b{background:#0ea5e9}
-
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 .btn{border:0;border-radius:14px;padding:12px 24px;font:inherit;font-weight:800;font-size:.93rem;cursor:pointer;transition:.25s;letter-spacing:.02em}
 .btn.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;box-shadow:0 10px 26px -10px var(--acc)}
@@ -184,7 +172,7 @@ textarea.inp{min-height:110px;resize:vertical;line-height:1.6}
 #reportPanel.show{display:block;animation:rise .4s}
 #reportPre{white-space:pre-wrap;background:#f6f8fc;border:1px solid var(--stroke);border-radius:16px;padding:20px;font-family:ui-monospace,Consolas,monospace;font-size:.84rem;line-height:1.65;color:#334155}
 @media(max-width:760px){.mgrid,.cols3,.ps-grid,.checklist-live{grid-template-columns:1fr}.tabs{position:static}.hero{padding:28px 22px}.cover{height:200px}}
-@media print{body{background:#fff;color:#000;padding:0}body::before,body::after,.hero,.tabs,.block:not(#b6),.actions,.checklist,.fb,.cover-btn,.msg-input,.group-chat{display:none!important}#reportPanel{display:block!important}#reportPre{background:#fff;color:#000;border:1px solid #999}}
+@media print{body{background:#fff;color:#000;padding:0}body::before,body::after,.hero,.tabs,.block:not(#b6),.actions,.checklist,.fb,.msg-input,.group-chat{display:none!important}#reportPanel{display:block!important}#reportPre{background:#fff;color:#000;border:1px solid #999}}
 </style>
 </head>
 <body>
@@ -262,10 +250,17 @@ textarea.inp{min-height:110px;resize:vertical;line-height:1.6}
 <!-- BLOCK 2 -->
 <section class="block" id="b2">
 <div class="block-head" style="--acc:#8b5cf6"><h2><span class="dot"></span>Block 2 · Digital Wellbeing</h2><p>Goal: understand healthy and unhealthy digital habits and compare them.</p></div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- >>> ВСТАВЬ ССЫЛКУ НА ОБЛОЖКУ №1 (DIGITAL WELLBEING) НИЖЕ <<< -->
+<!-- >>> ЗАМЕНИ ПУСТОЙ src="" НА СВОЮ ССЫЛКУ, НАПРИМЕР: <<< -->
+<!-- >>> src="cover-digital.jpg" ИЛИ src="https://.../image.jpg" <<< -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
 <div class="cover" id="cover2">
-<img src="" alt="" id="coverImg2" style="display:none">
-<div class="ph" id="coverPh2">🌈 Cover image · Digital Wellbeing (820 × 312)<br><label class="cover-btn">📷 Upload cover<input type="file" id="coverFile2" accept="image/*" style="display:none"></label></div>
+<img src="https://sun9-69.vkuserphoto.ru/s/v1/ig2/ydeQjzgoj99ULB-dZ6S6QvwjkGJkWvnbBRgUri7Le8U00VPgosmLA8Xkw7ITEcee6pkIJvfaZ9tADBvOgvzarkpT.jpg?quality=95&as=32x12,48x18,72x27,108x40,160x60,240x90,360x135,480x179,540x202,640x239,720x269,1080x404,1280x479,1440x538,1637x612&from=bu&u=Bw9Rk7fL2e9XDXM0kOkdJcfpDsr7hiBrTkeBxGRRZYg&cs=1637x0" alt="" id="coverImg2" style="display:none">
+<div class="ph" id="coverPh2">🌈 COVER · DIGITAL WELLBEING (820 × 312)<br>ВСТАВЬ ССЫЛКУ В КОДЕ — СМ. КОММЕНТАРИЙ ВЫШЕ</div>
 </div>
+
 <article class="card" data-a="l">
 <div class="card-top"><span class="exnum">EX 2.1</span><h3>Sort the Spectrum</h3><span class="badge drag">drag &amp; drop</span></div>
 <p class="instr"><b>Instructions:</b> first, read the group chat below — all 10 words from the spectrum are hidden in the conversation (highlighted). Then drag each word into the correct column. Some words can fit in more than one column!</p>
@@ -321,10 +316,17 @@ textarea.inp{min-height:110px;resize:vertical;line-height:1.6}
 <!-- BLOCK 3 -->
 <section class="block" id="b3">
 <div class="block-head" style="--acc:#0ea5e9"><h2><span class="dot"></span>Block 3 · Reading — FOMO &amp; FOBO</h2><p>Goal: read about the hidden fears of the digital age and hunt for grammar.</p></div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- >>> ВСТАВЬ ССЫЛКУ НА ОБЛОЖКУ №2 (READING / FOMO-FOBO) НИЖЕ <<< -->
+<!-- >>> ЗАМЕНИ ПУСТОЙ src="" НА СВОЮ ССЫЛКУ, НАПРИМЕР: <<< -->
+<!-- >>> src="cover-reading.jpg" ИЛИ src="https://.../image.jpg" <<< -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
 <div class="cover" id="cover3">
-<img src="" alt="" id="coverImg3" style="display:none">
-<div class="ph" id="coverPh3">📖 Cover image · FOMO &amp; FOBO (820 × 312)<br><label class="cover-btn">📷 Upload cover<input type="file" id="coverFile3" accept="image/*" style="display:none"></label></div>
+<img src="https://sun9-2.vkuserphoto.ru/s/v1/ig2/R9GNYIxp6WKlBxf400T4WhiSWrILishrDd0drXpgC0Eh_r-fffKm66ggwZS7HeRYcNkRcnJ2qz2RoZ8ncaR37DUh.jpg?quality=95&as=32x12,48x18,72x27,108x41,160x61,240x92,360x137,480x183,540x206,640x244,720x275,1080x412,1280x488,1440x549,1628x621&from=bu&u=bEtWi1Vt40MqA-_M65etJdntBamz6HgHlsLEckKne6Y&cs=1628x0" alt="" id="coverImg3" style="display:none">
+<div class="ph" id="coverPh3">📖 COVER · FOMO &amp; FOBO (820 × 312)<br>ВСТАВЬ ССЫЛКУ В КОДЕ — СМ. КОММЕНТАРИЙ ВЫШЕ</div>
 </div>
+
 <article class="card" data-a="r">
 <div class="card-top"><span class="exnum">EX 3.1</span><h3>Read &amp; Choose</h3><span class="badge auto">auto-check</span></div>
 <div class="article">
@@ -512,8 +514,8 @@ var TASK_LABELS={'1.1':'Ex 1.1 Milestones Matching','1.2':'Ex 1.2 Adulthood Arti
 var BLOCK_TASKS={b1:['1.1','1.2','1.3'],b2:['2.1','2.2','2.3'],b3:['3.1','3.2','3.3'],b4:['4.1','4.2','4.3','4.4'],b5:['5.1','5.2','5.3']};
 var state={name:'',scores:{},open:{},done:{}};
 
-function persist(){try{localStorage.setItem('u3practice_v3',JSON.stringify(state));}catch(e){}}
-function restore(){try{var raw=localStorage.getItem('u3practice_v3');if(raw){var s=JSON.parse(raw);if(s&&typeof s==='object'){state.name=s.name||'';state.scores=s.scores||{};state.open=s.open||{};state.done=s.done||{};}}}catch(e){}}
+function persist(){try{localStorage.setItem('u3practice_v4',JSON.stringify(state));}catch(e){}}
+function restore(){try{var raw=localStorage.getItem('u3practice_v4');if(raw){var s=JSON.parse(raw);if(s&&typeof s==='object'){state.name=s.name||'';state.scores=s.scores||{};state.open=s.open||{};state.done=s.done||{};}}}catch(e){}}
 function fb(id,type,html){var el=$('#'+id);if(!el)return;el.className='fb show '+type;el.innerHTML=html;}
 function norm(v){return(v||'').toLowerCase().replace(/\s+/g,' ').trim();}
 function refresh(){
@@ -531,22 +533,25 @@ safe(function(){$$('.tab').forEach(function(tab){tab.addEventListener('click',fu
 /* OPEN ANSWERS */
 safe(function(){$$('[data-open]').forEach(function(el){if(state.open[el.id])el.value=state.open[el.id];el.addEventListener('input',function(){state.open[el.id]=el.value;persist();});});var ni=$('#studentName');if(ni){ni.value=state.name||'';ni.addEventListener('input',function(){state.name=ni.value;persist();});}});
 
-/* COVERS */
+/* COVERS: show image automatically when src is set in the code */
 safe(function(){
-  ['coverImg2','coverImg3'].forEach(function(id){var img=$('#'+id);if(img&&img.getAttribute('src')&&img.getAttribute('src').length>5){img.style.display='block';var ph=$('#'+id.replace('Img','Ph'));if(ph)ph.style.display='none';}});
-  function setupCover(n){var img=$('#coverImg'+n),ph=$('#coverPh'+n),file=$('#coverFile'+n);if(!file)return;file.addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){if(img){img.src=ev.target.result;img.style.display='block';}if(ph)ph.style.display='none';};r.readAsDataURL(f);});}
-  setupCover(2);setupCover(3);
+  ['coverImg2','coverImg3'].forEach(function(id){
+    var img=$('#'+id);
+    if(img&&img.getAttribute('src')&&img.getAttribute('src').length>5){
+      img.style.display='block';
+      var ph=$('#'+id.replace('Img','Ph'));
+      if(ph)ph.style.display='none';
+    }
+  });
 });
 
-/* ========== MATCHING — EVENT DELEGATION (FIXED) ========== */
+/* MATCHING — EVENT DELEGATION */
 function setupMatching(leftSel,rightSel,checkId,resetId,fbId,total,task){
   safe(function(){
     var mMap={},mSel=null;
     var leftContainer=$(leftSel);
     var rightContainer=$(rightSel);
     if(!leftContainer||!rightContainer)return;
-
-    // Single delegated listener on LEFT container
     leftContainer.addEventListener('click',function(e){
       var item=e.target.closest('.mitem');
       if(!item||!leftContainer.contains(item))return;
@@ -554,8 +559,6 @@ function setupMatching(leftSel,rightSel,checkId,resetId,fbId,total,task){
       item.classList.add('sel');
       mSel=item.getAttribute('data-k');
     });
-
-    // Single delegated listener on RIGHT container
     rightContainer.addEventListener('click',function(e){
       var item=e.target.closest('.mitem');
       if(!item||!rightContainer.contains(item))return;
@@ -566,7 +569,6 @@ function setupMatching(leftSel,rightSel,checkId,resetId,fbId,total,task){
       item.classList.add('paired');
       mSel=null;
     });
-
     $(checkId).addEventListener('click',function(){
       var c=0;
       for(var i=1;i<=total;i++){
@@ -578,7 +580,6 @@ function setupMatching(leftSel,rightSel,checkId,resetId,fbId,total,task){
       state.scores[task]={c:c,t:total};markDone(task);
       fb(fbId,c===total?'ok':'warn','<b>'+c+'/'+total+'</b> correct.'+(c===total?' Perfect! \ud83c\udf89':''));
     });
-
     $(resetId).addEventListener('click',function(){
       mMap={};mSel=null;
       $$(leftSel+' .mitem, '+rightSel+' .mitem').forEach(function(el){el.classList.remove('sel','paired','ok','bad');});
@@ -701,5 +702,3 @@ refresh();
 </script>
 </body>
 </html>
-<img src="https://sun9-69.vkuserphoto.ru/s/v1/ig2/ydeQjzgoj99ULB-dZ6S6QvwjkGJkWvnbBRgUri7Le8U00VPgosmLA8Xkw7ITEcee6pkIJvfaZ9tADBvOgvzarkpT.jpg?quality=95&as=32x12,48x18,72x27,108x40,160x60,240x90,360x135,480x179,540x202,640x239,720x269,1080x404,1280x479,1440x538,1637x612&from=bu&u=Bw9Rk7fL2e9XDXM0kOkdJcfpDsr7hiBrTkeBxGRRZYg&cs=1637x0" alt="" id="coverImg2" style="display:none">
-<img src="https://sun9-2.vkuserphoto.ru/s/v1/ig2/R9GNYIxp6WKlBxf400T4WhiSWrILishrDd0drXpgC0Eh_r-fffKm66ggwZS7HeRYcNkRcnJ2qz2RoZ8ncaR37DUh.jpg?quality=95&as=32x12,48x18,72x27,108x41,160x61,240x92,360x137,480x183,540x206,640x244,720x275,1080x412,1280x488,1440x549,1628x621&from=bu&u=bEtWi1Vt40MqA-_M65etJdntBamz6HgHlsLEckKne6Y&cs=1628x0" alt="" id="coverImg3" style="display:none">
