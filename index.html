@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 3 "My Way of Life" — Interactive Practice</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/manrope@latest/latin-400-normal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/manrope@latest/latin-600-normal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/manrope@latest/latin-800-normal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/space-grotesk@latest/latin-700-normal.css">
+<style>
+:root{--bg:#f5f7fc;--text:#1b2340;--muted:#5b6486;--card:#fff;--stroke:#e6eaf5;--stroke2:#dfe5f2;--ok:#10b981;--warn:#f59e0b;--err:#ef4444}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:28px 16px 80px;overflow-x:hidden}
+body::before,body::after{content:'';position:fixed;border-radius:50%;filter:blur(110px);z-index:-1}
+body::before{width:520px;height:520px;background:rgba(139,92,246,.13);top:-160px;left:-140px}
+body::after{width:460px;height:460px;background:rgba(236,72,153,.12);bottom:-160px;right:-120px}
+.wrap{max-width:1080px;margin:0 auto}
+.hero{background:rgba(255,255,255,.8);border:1px solid var(--stroke);border-radius:28px;padding:40px 36px;backdrop-filter:blur(20px);position:relative;overflow:hidden;box-shadow:0 24px 60px -34px rgba(28,35,64,.3)}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.7rem,4vw,2.6rem);letter-spacing:-.5px;background:linear-gradient(90deg,#7c3aed,#db2777,#0d9488);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.sub{color:var(--muted);margin-top:6px;font-size:1.02rem}
+.hero-row{display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap;margin-top:26px}
+.field label{display:block;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:700}
+.inp{background:#fff;border:1px solid var(--stroke2);border-radius:14px;padding:12px 16px;color:var(--text);font:inherit;width:100%;transition:.2s}
+.inp:focus{outline:none;border-color:#8b5cf6;box-shadow:0 0 0 4px rgba(139,92,246,.14)}
+.progress-wrap{flex:1;min-width:220px}
+.pbar{height:10px;border-radius:99px;background:var(--stroke);overflow:hidden}
+.pfill{height:100%;width:0%;border-radius:99px;transition:width .6s cubic-bezier(.22,1,.36,1);background:linear-gradient(90deg,#10b981,#8b5cf6,#ec4899,#f59e0b)}
+.ptext{font-size:.85rem;color:var(--muted);margin-top:8px;font-weight:600}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0;padding:8px;background:rgba(255,255,255,.85);border:1px solid var(--stroke);border-radius:20px;backdrop-filter:blur(20px);position:sticky;top:12px;z-index:50;box-shadow:0 14px 40px -26px rgba(28,35,64,.35)}
+.tab{flex:1;min-width:120px;border:0;border-radius:14px;padding:14px 10px;cursor:pointer;background:transparent;color:var(--muted);font:inherit;font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center;gap:8px;transition:.25s}
+.tab:hover{background:#eef1f9;color:var(--text)}
+.tab.active{background:linear-gradient(135deg,var(--ta),var(--tb));color:#fff;box-shadow:0 10px 26px -10px var(--ta)}
+.tab .tick{display:none;font-size:.8rem}
+.tab.done .tick{display:inline}
+.block{display:none}.block.active{display:block}
+.block-head{margin:8px 4px 22px}
+.block-head h2{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;display:flex;align-items:center;gap:12px}
+.block-head .dot{width:14px;height:14px;border-radius:50%;background:var(--acc);box-shadow:0 0 16px var(--acc)}
+.block-head p{color:var(--muted);margin-top:6px}
+.card{--acc:#8b5cf6;--acc2:#7c3aed;background:var(--card);border:1px solid var(--stroke);border-radius:22px;padding:26px;margin-bottom:22px;position:relative;overflow:hidden;box-shadow:0 14px 44px -28px rgba(28,35,64,.3);animation:rise .5s both}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(var(--acc),var(--acc2))}
+.card[data-a="g"]{--acc:#10b981;--acc2:#0d9488}.card[data-a="l"]{--acc:#8b5cf6;--acc2:#7c3aed}.card[data-a="r"]{--acc:#0ea5e9;--acc2:#0284c7}.card[data-a="p"]{--acc:#a855f7;--acc2:#7c3aed}.card[data-a="c"]{--acc:#ec4899;--acc2:#db2777}.card[data-a="i"]{--acc:#6366f1;--acc2:#4f46e5}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.card-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.exnum{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.85rem;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;padding:6px 12px;border-radius:10px}
+.card-top h3{font-size:1.15rem}
+.badge{margin-left:auto;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;font-weight:800;padding:5px 10px;border-radius:99px;border:1px solid var(--stroke2);color:var(--muted)}
+.badge.auto{color:#0e7490;border-color:rgba(14,116,144,.35);background:rgba(14,116,144,.06)}.badge.write{color:#a21caf;border-color:rgba(162,28,175,.3);background:rgba(162,28,175,.06)}.badge.drag{color:#d97706;border-color:rgba(217,119,6,.35);background:rgba(217,119,6,.06)}.badge.smart{color:#db2777;border-color:rgba(219,39,119,.35);background:rgba(219,39,119,.06)}
+.instr{background:#f7f9fe;border:1px dashed var(--stroke2);border-radius:14px;padding:12px 16px;color:var(--muted);font-size:.95rem;margin-bottom:18px}
+.instr b{color:var(--text)}
+.cover{width:100%;max-width:820px;height:312px;margin:0 auto 22px;border:2px dashed #cbd5e1;border-radius:20px;background:#f8fafc;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#64748b;font-size:.95rem;font-weight:600;overflow:hidden;position:relative;padding:16px}
+.cover img{width:100%;height:100%;object-fit:cover;border-radius:16px;position:absolute;top:0;left:0}
+.cover .ph{position:relative;z-index:2}
+.cover-btn{margin-top:12px;padding:9px 18px;background:#fff;border:1px solid var(--stroke2);border-radius:12px;cursor:pointer;font-weight:700;color:var(--text);transition:.2s;display:inline-flex;align-items:center;gap:8px;position:relative;z-index:2}
+.cover-btn:hover{background:#f1f5f9;border-color:var(--acc)}
+
+/* MATCHING — fixed with event delegation */
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mitem{background:#fff;border:1px solid var(--stroke2);border-radius:14px;padding:12px 14px;cursor:pointer;transition:.2s;font-size:.95rem;user-select:none}
+.mitem:hover{transform:translateY(-2px);border-color:var(--acc);box-shadow:0 8px 20px -14px rgba(28,35,64,.4)}
+.mitem.sel{background:var(--acc);color:#fff;border-color:transparent;font-weight:700}
+.mitem.paired{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
+.mitem.ok{border-color:var(--ok);background:#ecfdf5;color:#065f46}
+.mitem.bad{border-color:var(--err);background:#fef2f2;color:#991b1b}
+
+.line{background:#f8fafd;border:1px solid var(--stroke);border-radius:14px;padding:14px 16px;margin-bottom:12px;font-size:.98rem;line-height:1.7}
+.wide{width:100%;margin-top:8px}
+textarea.inp{min-height:110px;resize:vertical;line-height:1.6}
+.gap-inp{display:inline-block;width:130px;padding:6px 10px;vertical-align:middle}
+.card[data-a="l"] .gap-inp,.card[data-a="r"] .gap-inp,.card[data-a="p"] .gap-inp{background:transparent;border:0;border-bottom:2px solid rgba(139,92,246,.25);border-radius:0;padding:2px 6px;width:120px;color:var(--text);font-weight:600;transition:.2s}
+.card[data-a="l"] .gap-inp:focus,.card[data-a="r"] .gap-inp:focus,.card[data-a="p"] .gap-inp:focus{outline:none;border-bottom-color:#8b5cf6;background:rgba(139,92,246,.06)}
+.card[data-a="l"] .gap-inp.ok,.card[data-a="r"] .gap-inp.ok,.card[data-a="p"] .gap-inp.ok{border-bottom-color:var(--ok);background:rgba(16,185,129,.08)}
+.card[data-a="l"] .gap-inp.bad,.card[data-a="r"] .gap-inp.bad,.card[data-a="p"] .gap-inp.bad{border-bottom-color:var(--err);background:rgba(239,68,68,.08)}
+
+/* Group chat for Ex 2.1 */
+.group-chat{max-width:480px;margin:0 auto 22px;border:1px solid var(--stroke);border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 14px 44px -28px rgba(28,35,64,.3)}
+.gc-header{background:linear-gradient(135deg,#8b5cf6,#7c3aed);color:#fff;padding:14px 18px;font-weight:700;font-size:.95rem}
+.gc-body{padding:18px;background:#f5f3ff;display:flex;flex-direction:column;gap:12px}
+.gc-msg{max-width:82%;padding:11px 15px;font-size:.93rem;line-height:1.55;position:relative}
+.gc-msg.left{align-self:flex-start;background:#fff;border:1px solid var(--stroke);border-radius:18px;border-bottom-left-radius:6px}
+.gc-msg.right{align-self:flex-end;background:#ede9fe;border:1px solid #ddd6fe;border-radius:18px;border-bottom-right-radius:6px}
+/* Jay messages: same bubble shape as left/right, just green-tinted */
+.gc-msg.jay{align-self:center;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:18px;border-bottom-left-radius:6px}
+.gc-name{font-weight:700;font-size:.8rem;margin-bottom:4px;display:block}
+.gc-name.alex{color:#7c3aed}.gc-name.mia{color:#059669}.gc-name.jay{color:#0284c7}
+.gc-hl{background:linear-gradient(transparent 55%,#fde68a 55%);padding:0 2px;font-weight:700}
+
+.word-bank{display:flex;flex-wrap:wrap;gap:10px;background:#fffbeb;border:1px dashed #fde68a;border-radius:16px;padding:16px;margin-bottom:20px;min-height:70px;align-items:center;justify-content:center}
+.drag-word{padding:8px 16px;border-radius:99px;background:#fff;border:1px solid #fcd34d;color:#92400e;cursor:grab;font-weight:700;font-size:.92rem;user-select:none;transition:.2s;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.drag-word:active{cursor:grabbing;transform:scale(1.05)}
+.drag-word.placed{opacity:.3;pointer-events:none}
+.drop-text{line-height:2.4;font-size:1.02rem;background:#f8fafd;border:1px solid var(--stroke);border-radius:14px;padding:20px}
+.drop-zone{display:inline-block;min-width:150px;height:30px;border-bottom:2px dashed var(--acc);border-radius:6px;vertical-align:middle;margin:0 4px;transition:.2s;background:rgba(255,255,255,.5)}
+.drop-zone.hover{background:rgba(139,92,246,.1);border-color:#8b5cf6}
+.drop-zone.filled{border-bottom-style:solid;background:#fff;color:var(--text);font-weight:600;padding:0 12px;line-height:28px;cursor:pointer}
+.drop-zone.ok{border-color:var(--ok);background:#ecfdf5;color:#065f46}
+.drop-zone.bad{border-color:var(--err);background:#fef2f2;color:#991b1b}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.dropcol{border:2px dashed #d7ddec;border-radius:18px;padding:16px;min-height:220px;background:#fbfcfe;transition:.2s}
+.dropcol.hot{border-color:var(--acc);background:#f4f7ff}
+.dropcol h4{text-align:center;padding:10px;border-radius:12px;color:#fff;margin-bottom:12px;font-size:.9rem}
+.dropcol.c1 h4{background:linear-gradient(135deg,#fb7185,#ef4444)}
+.dropcol.c2 h4{background:linear-gradient(135deg,#fbbf24,#f59e0b)}
+.dropcol.c3 h4{background:linear-gradient(135deg,#34d399,#10b981)}
+.drop{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.bank{display:flex;flex-wrap:wrap;gap:10px;background:#f8fafd;border:1px solid var(--stroke);border-radius:16px;padding:14px;margin-bottom:16px;min-height:64px}
+.chip{padding:9px 18px;border-radius:99px;background:#fff;border:1px solid var(--stroke2);cursor:pointer;user-select:none;transition:.2s;font-weight:600;font-size:.92rem;color:var(--text)}
+.chip:hover{transform:translateY(-2px);border-color:var(--acc)}
+.chip.sel{background:var(--acc);color:#fff;border-color:transparent;box-shadow:0 8px 20px -8px var(--acc)}
+.ps-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ps-item{background:#f8fafd;border:1px solid var(--stroke);border-radius:14px;padding:14px 16px}
+.ps-target{min-height:46px;border:2px dashed #cbd5e1;border-radius:12px;margin-top:10px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.85rem;transition:.2s}
+.ps-target.filled{border-style:solid;border-color:var(--acc);background:#fff;color:var(--text);font-weight:600;cursor:pointer}
+.ps-target.ok{border-color:var(--ok);background:#ecfdf5;color:#065f46}
+.ps-target.bad{border-color:var(--err);background:#fef2f2;color:#991b1b}
+.mcq{background:#f8fafd;border:1px solid var(--stroke);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.opts{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.opt{padding:8px 18px;border-radius:12px;border:1px solid var(--stroke2);background:#fff;cursor:pointer;transition:.2s;font-weight:600;font-size:.92rem;color:var(--text)}
+.opt:hover{border-color:var(--acc)}
+.opt.sel{background:var(--acc);color:#fff;border-color:transparent}
+.opt.ok{border-color:var(--ok);background:#ecfdf5;color:#065f46}
+.opt.bad{border-color:var(--err);background:#fef2f2;color:#991b1b}
+.article{background:#f8fafd;border:1px solid var(--stroke);border-radius:16px;padding:24px;line-height:1.85;font-size:1rem;margin-bottom:20px}
+.article p{margin-bottom:14px}
+.article b.hl{background:linear-gradient(transparent 60%,#fde68a 60%);padding:0 2px}
+.cmp-table{width:100%;border-collapse:collapse;margin-bottom:8px}
+.cmp-table th,.cmp-table td{border:1px solid var(--stroke2);padding:10px 12px;text-align:left;font-size:.95rem}
+.cmp-table th{background:#f1f5f9;font-weight:700}
+.cmp-table input{width:100%;border:0;border-bottom:2px solid var(--acc);background:transparent;padding:4px;font:inherit;color:var(--text)}
+.cmp-table input:focus{outline:none;background:#f8fafd}
+.cmp-table input.ok{border-bottom-color:var(--ok);background:#ecfdf5}
+.cmp-table input.bad{border-bottom-color:var(--err);background:#fef2f2}
+
+/* Pastel yellow cards for Ex 4.4 */
+.reply-card{background:#fffbeb;border:1px solid #fde68a;border-radius:18px;padding:18px 20px;margin-bottom:14px}
+.reply-card .rc-num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.85rem;color:#92400e;margin-bottom:10px}
+.reply-line{margin-bottom:8px;font-size:.97rem;line-height:1.7}
+.reply-line:last-child{margin-bottom:0}
+.reply-speaker{display:inline-block;width:22px;height:22px;border-radius:6px;text-align:center;line-height:22px;font-size:.75rem;font-weight:800;color:#fff;margin-right:6px;vertical-align:middle}
+.reply-speaker.a{background:#8b5cf6}.reply-speaker.b{background:#0ea5e9}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{border:0;border-radius:14px;padding:12px 24px;font:inherit;font-weight:800;font-size:.93rem;cursor:pointer;transition:.25s;letter-spacing:.02em}
+.btn.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;box-shadow:0 10px 26px -10px var(--acc)}
+.btn.primary:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.btn.primary:active{transform:scale(.97)}
+.btn.ghost{background:#fff;color:var(--text);border:1px solid var(--stroke2)}
+.btn.ghost:hover{background:#f2f5fb}
+.fb{display:none;margin-top:14px;padding:13px 16px;border-radius:14px;font-size:.95rem;font-weight:600}
+.fb.show{display:block;animation:rise .3s}
+.fb.ok{background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46}
+.fb.warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+.fb.err{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
+.example{background:#fdf2f8;border:1px solid #fbcfe8;border-radius:14px;padding:14px 16px;margin:14px 0;font-size:.95rem;line-height:1.7;color:#9d174d}
+.example b{color:#be185d}
+.hidden{display:none}
+.messenger{max-width:480px;margin:0 auto;border:1px solid var(--stroke);border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 14px 44px -28px rgba(28,35,64,.3)}
+.msg-header{background:linear-gradient(135deg,#8b5cf6,#7c3aed);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:10px;font-weight:700}
+.msg-header .online{width:9px;height:9px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399}
+.msg-body{padding:18px;background:#f5f3ff;min-height:300px;max-height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:10px}
+.bubble{max-width:78%;padding:11px 15px;border-radius:18px;font-size:.95rem;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+.bubble.in{align-self:flex-start;background:#fff;border:1px solid var(--stroke);border-bottom-left-radius:6px}
+.bubble.out{align-self:flex-end;background:linear-gradient(135deg,#8b5cf6,#7c3aed);color:#fff;border-bottom-right-radius:6px}
+.msg-input{display:flex;gap:10px;padding:14px;border-top:1px solid var(--stroke);background:#fff}
+.msg-input textarea{flex:1;border:1px solid var(--stroke2);border-radius:14px;padding:10px 14px;font:inherit;resize:none;min-height:48px;max-height:120px}
+.msg-input textarea:focus{outline:none;border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.12)}
+.send-btn{border:0;border-radius:14px;padding:0 20px;background:linear-gradient(135deg,#ec4899,#db2777);color:#fff;font-weight:800;cursor:pointer;transition:.2s}
+.send-btn:hover{filter:brightness(1.06)}
+.checklist-live{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.ck-live{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:10px;background:#f8fafd;border:1px solid var(--stroke);font-size:.85rem;font-weight:600;color:var(--muted);transition:.2s}
+.ck-live .box{width:18px;height:18px;border-radius:5px;border:2px solid var(--stroke2);display:grid;place-items:center;font-size:.7rem;flex:none;transition:.2s}
+.ck-live.done{color:#065f46;border-color:#a7f3d0;background:#ecfdf5}
+.ck-live.done .box{background:var(--ok);border-color:var(--ok);color:#fff}
+.word-counter{text-align:center;font-size:.85rem;color:var(--muted);margin-top:10px;font-weight:600}
+.word-counter.ok{color:#065f46}
+.checklist{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin:18px 0}
+.ck{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:12px;background:#fff;border:1px solid var(--stroke);font-size:.9rem;font-weight:600;color:var(--muted)}
+.ck .box{width:20px;height:20px;border-radius:6px;border:2px solid var(--stroke2);display:grid;place-items:center;font-size:.75rem;flex:none}
+.ck.done{color:#065f46;border-color:#a7f3d0;background:#ecfdf5}
+.ck.done .box{background:var(--ok);border-color:var(--ok);color:#fff}
+#reportPanel{display:none;margin-top:20px}
+#reportPanel.show{display:block;animation:rise .4s}
+#reportPre{white-space:pre-wrap;background:#f6f8fc;border:1px solid var(--stroke);border-radius:16px;padding:20px;font-family:ui-monospace,Consolas,monospace;font-size:.84rem;line-height:1.65;color:#334155}
+@media(max-width:760px){.mgrid,.cols3,.ps-grid,.checklist-live{grid-template-columns:1fr}.tabs{position:static}.hero{padding:28px 22px}.cover{height:200px}}
+@media print{body{background:#fff;color:#000;padding:0}body::before,body::after,.hero,.tabs,.block:not(#b6),.actions,.checklist,.fb,.cover-btn,.msg-input,.group-chat{display:none!important}#reportPanel{display:block!important}#reportPre{background:#fff;color:#000;border:1px solid #999}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<h1>Unit 3 · My Way of Life</h1>
+<p class="sub">Interactive Practice · Level A2+ / B1 · Modern Milestones → Digital Wellbeing → Reading → Grammar → Chat Writing</p>
+<div class="hero-row">
+<div class="field" style="flex:1;min-width:220px"><label for="studentName">Student name</label><input class="inp" id="studentName" placeholder="Type your name…"></div>
+<div class="progress-wrap"><div class="pbar"><div class="pfill" id="progFill"></div></div><div class="ptext" id="progText">0 / 16 tasks completed</div></div>
+</div>
+</header>
+<nav class="tabs">
+<button class="tab active" data-t="b1" style="--ta:#10b981;--tb:#0d9488">🟢 Milestones <span class="tick">✓</span></button>
+<button class="tab" data-t="b2" style="--ta:#8b5cf6;--tb:#7c3aed">🌈 Digital <span class="tick">✓</span></button>
+<button class="tab" data-t="b3" style="--ta:#0ea5e9;--tb:#0284c7">📖 Reading <span class="tick">✓</span></button>
+<button class="tab" data-t="b4" style="--ta:#a855f7;--tb:#7c3aed">🟣 Grammar <span class="tick">✓</span></button>
+<button class="tab" data-t="b5" style="--ta:#ec4899;--tb:#db2777">💬 Chat <span class="tick">✓</span></button>
+<button class="tab" data-t="b6" style="--ta:#6366f1;--tb:#4f46e5">📊 Report <span class="tick">✓</span></button>
+</nav>
+
+<!-- BLOCK 1 -->
+<section class="block active" id="b1">
+<div class="block-head" style="--acc:#10b981"><h2><span class="dot"></span>Block 1 · Modern Milestones</h2><p>Goal: talk about the real steps of growing up in the digital age.</p></div>
+<article class="card" data-a="g">
+<div class="card-top"><span class="exnum">EX 1.1</span><h3>Match the Meaning</h3><span class="badge auto">auto-check</span></div>
+<p class="instr"><b>Instructions:</b> click a milestone on the left, then click its meaning on the right.</p>
+<div class="mgrid">
+<div id="mLeft1">
+<div class="mitem" data-k="1">1. to start a side hustle</div>
+<div class="mitem" data-k="2">2. to take a gap year</div>
+<div class="mitem" data-k="3">3. to move out</div>
+<div class="mitem" data-k="4">4. to get your first paycheck</div>
+<div class="mitem" data-k="5">5. to figure out what you want to do</div>
+<div class="mitem" data-k="6">6. to be independent</div>
+</div>
+<div id="mRight1">
+<div class="mitem" data-k="1">A. to start earning your own small money</div>
+<div class="mitem" data-k="4">B. to get your first salary</div>
+<div class="mitem" data-k="3">C. to leave your parents' house</div>
+<div class="mitem" data-k="2">D. to have a year break before university</div>
+<div class="mitem" data-k="6">E. able to live and make decisions on your own</div>
+<div class="mitem" data-k="5">F. to understand what career you want</div>
+</div>
+</div>
+<div class="actions"><button class="btn primary" id="check11">Check answers</button><button class="btn ghost" id="reset11">Reset</button></div>
+<div class="fb" id="fb11"></div>
+</article>
+<article class="card" data-a="g">
+<div class="card-top"><span class="exnum">EX 1.2</span><h3>When Does Adulthood Begin?</h3><span class="badge drag">drag &amp; drop</span></div>
+<p class="instr"><b>Instructions:</b> read the article. Drag the milestones from the box into the correct gaps. Click a placed word to return it.</p>
+<div class="word-bank" id="bank12">
+<div class="drag-word" draggable="true" data-w="start a side hustle">start a side hustle</div>
+<div class="drag-word" draggable="true" data-w="take a gap year">take a gap year</div>
+<div class="drag-word" draggable="true" data-w="move out">move out</div>
+<div class="drag-word" draggable="true" data-w="get your first paycheck">get your first paycheck</div>
+<div class="drag-word" draggable="true" data-w="figure out what you want to do">figure out what you want to do</div>
+<div class="drag-word" draggable="true" data-w="be independent">be independent</div>
+</div>
+<div class="drop-text" id="dropText12"><b>📰 WHEN DOES ADULTHOOD BEGIN?</b><br><br>At what point can a teenager really take control of their life and start being responsible for it? There's no single answer — everyone grows up at their own speed.<br><br>For some, the first real step is money: they <span class="drop-zone" data-ans="start a side hustle"></span> — maybe selling handmade crafts online or walking dogs — and feel proud when they <span class="drop-zone" data-ans="get your first paycheck"></span>. That first bit of earned money changes how you see yourself.<br><br>But responsibility isn't only about cash. The biggest question of all is identity: who am I, and what's my path? Many teens need time to <span class="drop-zone" data-ans="figure out what you want to do"></span> before the pressure of exams and university begins. That's why some choose to <span class="drop-zone" data-ans="take a gap year"></span> — to travel, volunteer, or simply breathe and think.<br><br>And one day, the final milestone arrives: you pack your bags and <span class="drop-zone" data-ans="move out"></span>. You are finally able to <span class="drop-zone" data-ans="be independent"></span>. Your life, your rules, your responsibility.<br><br>So — which of these milestones feels like the biggest step to you?</div>
+<div class="actions"><button class="btn primary" id="check12">Check answers</button><button class="btn ghost" id="reset12">Reset gaps</button></div>
+<div class="fb" id="fb12"></div>
+</article>
+<article class="card" data-a="g">
+<div class="card-top"><span class="exnum">EX 1.3</span><h3>Your Timeline</h3><span class="badge write">writing</span></div>
+<p class="instr"><b>Instructions:</b> answer using <b>too / enough / not … enough</b> and the milestones above. Your answers are saved for the teacher's report.</p>
+<div class="line">1. At what age is it OK to start a side hustle?<textarea class="inp" id="t13a" data-open></textarea></div>
+<div class="line">2. Is 16 old enough to move out? Why / Why not?<textarea class="inp" id="t13b" data-open></textarea></div>
+<div class="line">3. Would you like to take a gap year? Would your parents be patient enough?<textarea class="inp" id="t13c" data-open></textarea></div>
+<div class="actions"><button class="btn primary" id="save13">Save answers</button></div>
+<div class="fb" id="fb13"></div>
+</article>
+</section>
+
+<!-- BLOCK 2 -->
+<section class="block" id="b2">
+<div class="block-head" style="--acc:#8b5cf6"><h2><span class="dot"></span>Block 2 · Digital Wellbeing</h2><p>Goal: understand healthy and unhealthy digital habits and compare them.</p></div>
+<div class="cover" id="cover2">
+<img src="" alt="" id="coverImg2" style="display:none">
+<div class="ph" id="coverPh2">🌈 Cover image · Digital Wellbeing (820 × 312)<br><label class="cover-btn">📷 Upload cover<input type="file" id="coverFile2" accept="image/*" style="display:none"></label></div>
+</div>
+<article class="card" data-a="l">
+<div class="card-top"><span class="exnum">EX 2.1</span><h3>Sort the Spectrum</h3><span class="badge drag">drag &amp; drop</span></div>
+<p class="instr"><b>Instructions:</b> first, read the group chat below — all 10 words from the spectrum are hidden in the conversation (highlighted). Then drag each word into the correct column. Some words can fit in more than one column!</p>
+
+<div class="group-chat">
+<div class="gc-header">💬 Group Chat · Digital Detox Squad</div>
+<div class="gc-body">
+<div class="gc-msg left"><span class="gc-name alex">🟣 Alex</span>guys my <span class="gc-hl">screen time</span> was 9 hours yesterday 😭 I <span class="gc-hl">doomscroll</span> every night until 2am</div>
+<div class="gc-msg right"><span class="gc-name mia">🟢 Mia</span>same... I had such bad <span class="gc-hl">FOMO</span> after seeing your stories from the concert 😩</div>
+<div class="gc-msg jay"><span class="gc-name jay">🔵 Jay</span>ok we all need a <span class="gc-hl">digital detox</span> this weekend. I'm gonna <span class="gc-hl">unplug</span> completely 📵</div>
+<div class="gc-msg right"><span class="gc-name mia">🟢 Mia</span>yes! and stop <span class="gc-hl">leaving people on read</span>, it's so rude 😤</div>
+<div class="gc-msg left"><span class="gc-name alex">🟣 Alex</span>sorry for <span class="gc-hl">ghosting</span> you last week btw, <span class="gc-hl">notification fatigue</span> is real 🫠</div>
+<div class="gc-msg jay"><span class="gc-name jay">🔵 Jay</span>also stop <span class="gc-hl">binge-watching</span> till 3am and comparing yourself to <span class="gc-hl">curated feeds</span>!! that's not real life 🙄</div>
+</div>
+</div>
+
+<div class="bank" id="bank21"><span class="chip" data-w="doomscroll">doomscroll</span><span class="chip" data-w="FOMO">FOMO</span><span class="chip" data-w="binge-watch">binge-watch</span><span class="chip" data-w="digital detox">digital detox</span><span class="chip" data-w="leave on read">leave on read</span><span class="chip" data-w="ghost">ghost</span><span class="chip" data-w="notification fatigue">notification fatigue</span><span class="chip" data-w="unplug">unplug</span><span class="chip" data-w="curated feed">curated feed</span><span class="chip" data-w="screen time">screen time</span></div>
+<div class="cols3"><div class="dropcol c1" id="colUnhealthy"><h4>🔴 UNHEALTHY</h4><div class="drop"></div></div><div class="dropcol c2" id="colWarning"><h4>🟡 WARNING</h4><div class="drop"></div></div><div class="dropcol c3" id="colHealthy"><h4>🟢 HEALTHY</h4><div class="drop"></div></div></div>
+<div class="actions"><button class="btn primary" id="check21">Check sorting</button><button class="btn ghost" id="reset21">Reset</button></div>
+<div class="fb" id="fb21"></div>
+</article>
+<article class="card" data-a="l">
+<div class="card-top"><span class="exnum">EX 2.2</span><h3>Compare the Habits</h3><span class="badge auto">auto-check</span></div>
+<p class="instr"><b>Instructions:</b> complete with the correct comparative / superlative / not as…as form.</p>
+<div class="line">1. Doomscrolling is <input class="inp gap-inp" id="c22a" data-ans="worse"> (bad) for your mental health than binge-watching.</div>
+<div class="line">2. A digital detox is <input class="inp gap-inp" id="c22b" data-ans="the most effective"> (effective) way to reduce FOMO.</div>
+<div class="line">3. Leaving someone on read is <input class="inp gap-inp" id="c22c" data-ans="not as rude as"> (rude) ghosting.</div>
+<div class="line">4. Notification fatigue is <input class="inp gap-inp" id="c22d" data-ans="more common"> (common) among teens now than five years ago.</div>
+<div class="line">5. Unplugging for a day is <input class="inp gap-inp" id="c22e" data-ans="harder"> (hard) than limiting screen time.</div>
+<div class="actions"><button class="btn primary" id="check22">Check answers</button><button class="btn ghost" id="reset22">Reset</button></div>
+<div class="fb" id="fb22"></div>
+</article>
+<article class="card" data-a="l">
+<div class="card-top"><span class="exnum">EX 2.3</span><h3>Problem → Solution</h3><span class="badge drag">drag &amp; drop</span></div>
+<p class="instr"><b>Instructions:</b> drag the healthy solution (A–D) to the matching problem. Click a placed solution to return it.</p>
+<div class="word-bank" id="bank23" style="background:#f0fdf4;border-color:#bbf7d0">
+<div class="drag-word" draggable="true" data-w="A" style="border-color:#86efac;color:#166534">A. Set a screen time limit</div>
+<div class="drag-word" draggable="true" data-w="B" style="border-color:#86efac;color:#166534">B. Do a digital detox at the weekend</div>
+<div class="drag-word" draggable="true" data-w="C" style="border-color:#86efac;color:#166534">C. Turn off non-essential notifications</div>
+<div class="drag-word" draggable="true" data-w="D" style="border-color:#86efac;color:#166534">D. Reply honestly: "Sorry, I was overwhelmed"</div>
+</div>
+<div class="ps-grid">
+<div class="ps-item"><b>1.</b> I doomscroll until 2 AM and feel exhausted.<div class="ps-target" data-ans="A" id="ps1">drop solution here</div></div>
+<div class="ps-item"><b>2.</b> I have FOMO when I see my friends' stories.<div class="ps-target" data-ans="B" id="ps2">drop solution here</div></div>
+<div class="ps-item"><b>3.</b> My phone buzzes every minute and I can't focus.<div class="ps-target" data-ans="C" id="ps3">drop solution here</div></div>
+<div class="ps-item"><b>4.</b> I left my friend on read and now feel guilty.<div class="ps-target" data-ans="D" id="ps4">drop solution here</div></div>
+</div>
+<div class="actions"><button class="btn primary" id="check23">Check answers</button><button class="btn ghost" id="reset23">Reset</button></div>
+<div class="fb" id="fb23"></div>
+</article>
+</section>
+
+<!-- BLOCK 3 -->
+<section class="block" id="b3">
+<div class="block-head" style="--acc:#0ea5e9"><h2><span class="dot"></span>Block 3 · Reading — FOMO &amp; FOBO</h2><p>Goal: read about the hidden fears of the digital age and hunt for grammar.</p></div>
+<div class="cover" id="cover3">
+<img src="" alt="" id="coverImg3" style="display:none">
+<div class="ph" id="coverPh3">📖 Cover image · FOMO &amp; FOBO (820 × 312)<br><label class="cover-btn">📷 Upload cover<input type="file" id="coverFile3" accept="image/*" style="display:none"></label></div>
+</div>
+<article class="card" data-a="r">
+<div class="card-top"><span class="exnum">EX 3.1</span><h3>Read &amp; Choose</h3><span class="badge auto">auto-check</span></div>
+<div class="article">
+<p><b>📱 FOMO and FOBO: The Hidden Fears of the Digital Age</b></p>
+<p>Before the internet, people didn't know what their classmates were doing every evening. Today, we see every party, every trip and every concert in our <b class="hl">feed</b> — and this creates a new kind of stress. Psychologists call it <b class="hl">FOMO</b>, the fear of missing out.</p>
+<p>"I see my friends' stories every day," says 15-year-old Alina. "If they go to a café without me, I feel awful. My life seems <b class="hl">not as exciting as</b> theirs, even though I know it's not true."</p>
+<p>But FOMO has a younger brother: <b class="hl">FOBO</b> — the fear of better <b class="hl">options</b>. It appears when we have <b class="hl">too many</b> choices and can't <b class="hl">make a decision</b>. We spend an hour choosing a film on a streaming service and end up watching nothing. We order food, then feel <b class="hl">disappointed</b> because another restaurant probably had <b class="hl">better</b> dishes.</p>
+<p>"I can't choose anything," <b class="hl">admits</b> 16-year-old Mark. "I scroll for hours because I'm afraid the next video will be <b class="hl">funnier</b> or <b class="hl">more interesting</b>. In the end, I'm <b class="hl">more exhausted than</b> relaxed."</p>
+<p>Experts say both fears make teenage life <b class="hl">more stressful than</b> it was in the past. Their advice is simple: put your phone away, do a <b class="hl">digital detox</b> at the weekend, and remember that real life is <b class="hl">not as perfect as</b> it looks on a screen. The <b class="hl">happiest</b> people are those who don't <b class="hl">compare</b> themselves with others — they just enjoy the moment.</p>
+</div>
+<div class="mcq" data-ex="3.1" data-a="A"><b>1.</b> FOMO appears when…<div class="opts"><span class="opt" data-v="A">A. we see what others do without us</span><span class="opt" data-v="B">B. we have too many choices</span><span class="opt" data-v="C">C. we can't choose a film</span></div></div>
+<div class="mcq" data-ex="3.1" data-a="B"><b>2.</b> FOBO makes people…<div class="opts"><span class="opt" data-v="A">A. feel sad about success</span><span class="opt" data-v="B">B. spend long choosing &amp; feel unhappy</span><span class="opt" data-v="C">C. do a detox</span></div></div>
+<div class="mcq" data-ex="3.1" data-a="A"><b>3.</b> Mark feels exhausted because…<div class="opts"><span class="opt" data-v="A">A. he scrolls for hours</span><span class="opt" data-v="B">B. too many parties</span><span class="opt" data-v="C">C. no sleep</span></div></div>
+<div class="mcq" data-ex="3.1" data-a="B"><b>4.</b> The happiest people…<div class="opts"><span class="opt" data-v="A">A. have newest phones</span><span class="opt" data-v="B">B. don't compare themselves</span><span class="opt" data-v="C">C. choose best options</span></div></div>
+<div class="actions"><button class="btn primary" id="check31">Check answers</button><button class="btn ghost" id="reset31">Reset</button></div>
+<div class="fb" id="fb31"></div>
+</article>
+<article class="card" data-a="r">
+<div class="card-top"><span class="exnum">EX 3.2</span><h3>Match the Words</h3><span class="badge auto">auto-check</span></div>
+<p class="instr"><b>Instructions:</b> click a highlighted word, then click its meaning.</p>
+<div class="mgrid">
+<div id="mLeft3"><div class="mitem" data-k="1">feed</div><div class="mitem" data-k="2">options</div><div class="mitem" data-k="3">make a decision</div><div class="mitem" data-k="4">disappointed</div><div class="mitem" data-k="5">admits</div><div class="mitem" data-k="6">exhausted</div><div class="mitem" data-k="7">digital detox</div><div class="mitem" data-k="8">compare</div></div>
+<div id="mRight3"><div class="mitem" data-k="6">A. extremely tired</div><div class="mitem" data-k="1">B. the list of posts you see on social media</div><div class="mitem" data-k="8">C. to think how you are similar/different to others</div><div class="mitem" data-k="3">D. to choose after thinking</div><div class="mitem" data-k="7">E. a period without phone or internet</div><div class="mitem" data-k="4">F. unhappy because something wasn't as good as hoped</div><div class="mitem" data-k="2">G. things you can choose from</div><div class="mitem" data-k="5">H. to say something is true, even unwillingly</div></div>
+</div>
+<div class="actions"><button class="btn primary" id="check32">Check answers</button><button class="btn ghost" id="reset32">Reset</button></div>
+<div class="fb" id="fb32"></div>
+</article>
+<article class="card" data-a="r">
+<div class="card-top"><span class="exnum">EX 3.3</span><h3>Grammar Hunt</h3><span class="badge auto">auto-check</span></div>
+<p class="instr"><b>Instructions:</b> find examples in the text and type them in.</p>
+<div class="line">Two examples of <i>not as … as</i>: <input class="inp gap-inp" id="gh1" data-ans="not as exciting as" style="width:160px"> <input class="inp gap-inp" id="gh2" data-ans="not as perfect as" style="width:160px"></div>
+<div class="line">One example of <i>too + many</i>: <input class="inp gap-inp" id="gh3" data-ans="too many"></div>
+<div class="line">Two comparatives: <input class="inp gap-inp" id="gh4" data-ans="better" style="width:160px"> <input class="inp gap-inp" id="gh5" data-ans="funnier" style="width:160px"></div>
+<div class="line">One superlative: <input class="inp gap-inp" id="gh6" data-ans="the happiest"></div>
+<div class="actions"><button class="btn primary" id="check33">Check answers</button><button class="btn ghost" id="reset33">Reset</button></div>
+<div class="fb" id="fb33"></div>
+</article>
+</section>
+
+<!-- BLOCK 4 -->
+<section class="block" id="b4">
+<div class="block-head" style="--acc:#a855f7"><h2><span class="dot"></span>Block 4 · Grammar</h2><p>Goal: master comparatives, superlatives, not as…as, and too / enough.</p></div>
+<article class="card" data-a="p">
+<div class="card-top"><span class="exnum">EX 4.1</span><h3>Complete the Table</h3><span class="badge auto">auto-check</span></div>
+<p class="instr"><b>Instructions:</b> fill in the missing comparative / superlative forms.</p>
+<table class="cmp-table"><tr><th>Adjective</th><th>Comparative</th><th>Superlative</th></tr>
+<tr><td>great</td><td>greater</td><td><input id="t41a" data-ans="the greatest"></td></tr>
+<tr><td>safe</td><td><input id="t41b" data-ans="safer"></td><td>the safest</td></tr>
+<tr><td>easy</td><td><input id="t41c" data-ans="easier"></td><td>the easiest</td></tr>
+<tr><td>important</td><td>more important</td><td><input id="t41d" data-ans="the most important"></td></tr>
+<tr><td>good</td><td><input id="t41e" data-ans="better"></td><td>the best</td></tr>
+<tr><td>bad</td><td>worse</td><td><input id="t41f" data-ans="the worst"></td></tr></table>
+<div class="actions"><button class="btn primary" id="check41">Check answers</button><button class="btn ghost" id="reset41">Reset</button></div>
+<div class="fb" id="fb41"></div>
+</article>
+<article class="card" data-a="p">
+<div class="card-top"><span class="exnum">EX 4.2</span><h3>Traditional vs Modern</h3><span class="badge auto">auto-check</span></div>
+<p class="instr"><b>Instructions:</b> complete each gap with the correct form of the adjective in brackets — use a <b>comparative</b> (<i>more / +er</i>) or the structure <b>too + many/much</b>.</p>
+<div class="line">1. Starting a side hustle is <input class="inp gap-inp" id="c42a" data-ans="more common"> (common) now than in the past.</div>
+<div class="line">2. Taking a gap year is <input class="inp gap-inp" id="c42b" data-ans="more popular"> (popular) in Europe than in Russia.</div>
+<div class="line">3. Moving out is <input class="inp gap-inp" id="c42c" data-ans="more difficult"> (difficult) today because rent is <input class="inp gap-inp" id="c42d" data-ans="more expensive"> (expensive).</div>
+<div class="line">4. Figuring out what you want is <input class="inp gap-inp" id="c42e" data-ans="harder"> (hard) now because there are <input class="inp gap-inp" id="c42f" data-ans="too many"> (many) options.</div>
+<div class="line">5. A first paycheck is usually <input class="inp gap-inp" id="c42g" data-ans="smaller"> (small) than a full-time salary.</div>
+<div class="actions"><button class="btn primary" id="check42">Check answers</button><button class="btn ghost" id="reset42">Reset</button></div>
+<div class="fb" id="fb42"></div>
+</article>
+<article class="card" data-a="p">
+<div class="card-top"><span class="exnum">EX 4.3</span><h3>Correct the Mistake</h3><span class="badge write">writing + auto-check</span></div>
+<p class="instr"><b>Instructions:</b> write the corrected word or phrase.</p>
+<div class="line"><b>1.</b> They live in a house bigger than us. → <input class="inp wide" id="m43a" data-open placeholder="Correction..."></div>
+<div class="line"><b>2.</b> My mum is more relaxed that my dad. → <input class="inp wide" id="m43b" data-open placeholder="Correction..."></div>
+<div class="line"><b>3.</b> Coffee is the more popular drink in the UK. → <input class="inp wide" id="m43c" data-open placeholder="Correction..."></div>
+<div class="line"><b>4.</b> This area is more quiet than the city centre. → <input class="inp wide" id="m43d" data-open placeholder="Correction..."></div>
+<div class="line"><b>5.</b> My most happiest time was when I lived abroad. → <input class="inp wide" id="m43e" data-open placeholder="Correction..."></div>
+<div class="line"><b>6.</b> I'm not as taller as you. → <input class="inp wide" id="m43f" data-open placeholder="Correction..."></div>
+<div class="actions"><button class="btn primary" id="check43">Check answers</button><button class="btn ghost" id="show43">Show answers</button></div>
+<div class="fb" id="fb43"></div>
+</article>
+<article class="card" data-a="p">
+<div class="card-top"><span class="exnum">EX 4.4</span><h3>too / enough Replies</h3><span class="badge auto">auto-check</span></div>
+<p class="instr"><b>Instructions:</b> complete the replies with <b>too</b> or <b>enough</b> + the word in brackets. Remember: <b>too</b> goes BEFORE the adjective (<i>too slow</i>), <b>enough</b> goes AFTER adjectives (<i>big enough</i>) but BEFORE nouns (<i>enough time</i>).</p>
+
+<div class="reply-card"><div class="rc-num">1</div>
+<div class="reply-line"><span class="reply-speaker a">A</span>Did you buy the trainers?</div>
+<div class="reply-line"><span class="reply-speaker b">B</span>No. They weren't <input class="inp gap-inp" id="e44a" data-ans="big enough"> (big). They felt <input class="inp gap-inp" id="e44b" data-ans="too tight"> (tight).</div></div>
+
+<div class="reply-card"><div class="rc-num">2</div>
+<div class="reply-line"><span class="reply-speaker a">A</span>Why didn't you do the homework?</div>
+<div class="reply-line"><span class="reply-speaker b">B</span>I didn't have <input class="inp gap-inp" id="e44c" data-ans="enough time"> (time) and I was <input class="inp gap-inp" id="e44d" data-ans="too tired"> (tired).</div></div>
+
+<div class="reply-card"><div class="rc-num">3</div>
+<div class="reply-line"><span class="reply-speaker a">A</span>Why did you buy a new laptop?</div>
+<div class="reply-line"><span class="reply-speaker b">B</span>Mine was <input class="inp gap-inp" id="e44e" data-ans="too slow"> (slow) and it didn't have <input class="inp gap-inp" id="e44f" data-ans="enough memory"> (memory) for my games.</div></div>
+
+<div class="reply-card"><div class="rc-num">4</div>
+<div class="reply-line"><span class="reply-speaker a">A</span>Why do you keep scrolling instead of studying?</div>
+<div class="reply-line"><span class="reply-speaker b">B</span>I don't have <input class="inp gap-inp" id="e44g" data-ans="enough self-control"> (self-control), because my feed is <input class="inp gap-inp" id="e44h" data-ans="too interesting"> (interesting).</div></div>
+
+<div class="reply-card"><div class="rc-num">5</div>
+<div class="reply-line"><span class="reply-speaker a">A</span>Can I borrow your jacket?</div>
+<div class="reply-line"><span class="reply-speaker b">B</span>Sorry, it's <input class="inp gap-inp" id="e44i" data-ans="too small"> (small) for you. Try my brother's — it should be <input class="inp gap-inp" id="e44j" data-ans="big enough"> (big).</div></div>
+
+<div class="reply-card"><div class="rc-num">6</div>
+<div class="reply-line"><span class="reply-speaker a">A</span>Why are you so tired?</div>
+<div class="reply-line"><span class="reply-speaker b">B</span>I didn't get <input class="inp gap-inp" id="e44k" data-ans="enough sleep"> (sleep) last night — my phone was <input class="inp gap-inp" id="e44l" data-ans="too loud"> (loud).</div></div>
+
+<div class="actions"><button class="btn primary" id="check44">Check answers</button><button class="btn ghost" id="reset44">Reset</button></div>
+<div class="fb" id="fb44"></div>
+</article>
+</section>
+
+<!-- BLOCK 5 -->
+<section class="block" id="b5">
+<div class="block-head" style="--acc:#ec4899"><h2><span class="dot"></span>Block 5 · Chat Writing</h2><p>Goal: write a natural messenger reply using slang, comparatives and too/enough.</p></div>
+<article class="card" data-a="c">
+<div class="card-top"><span class="exnum">EX 5.1</span><h3>Chat Language</h3><span class="badge auto">auto-check</span></div>
+<p class="instr"><b>Instructions:</b> click a chat phrase, then click its meaning.</p>
+<div class="mgrid">
+<div id="mLeft5"><div class="mitem" data-k="1">1. No way!</div><div class="mitem" data-k="2">2. Congrats!</div><div class="mitem" data-k="3">3. TBH</div><div class="mitem" data-k="4">4. gotta go</div><div class="mitem" data-k="5">5. hit me up</div><div class="mitem" data-k="6">6. low-key jealous</div><div class="mitem" data-k="7">7. epic</div><div class="mitem" data-k="8">8. ttyl</div></div>
+<div id="mRight5"><div class="mitem" data-k="3">A. to be honest</div><div class="mitem" data-k="5">B. write to me / contact me</div><div class="mitem" data-k="1">C. I'm really surprised!</div><div class="mitem" data-k="6">D. a little envious, but I hide it</div><div class="mitem" data-k="4">E. I have to leave now</div><div class="mitem" data-k="2">F. Well done!</div><div class="mitem" data-k="8">G. talk to you later</div><div class="mitem" data-k="7">H. amazing, fantastic</div></div>
+</div>
+<div class="actions"><button class="btn primary" id="check51">Check answers</button><button class="btn ghost" id="reset51">Reset</button></div>
+<div class="fb" id="fb51"></div>
+</article>
+<article class="card" data-a="c">
+<div class="card-top"><span class="exnum">EX 5.2</span><h3>From Email to Chat</h3><span class="badge write">writing</span></div>
+<p class="instr"><b>Instructions:</b> rewrite these "email" sentences in chat style. Saved to the report.</p>
+<div class="line">1. I am very surprised! That is amazing news! → <input class="inp wide" id="e52a" data-open placeholder="chat style..."></div>
+<div class="line">2. I have to go now, my mum is calling me. → <input class="inp wide" id="e52b" data-open placeholder="chat style..."></div>
+<div class="line">3. Write to me soon. → <input class="inp wide" id="e52c" data-open placeholder="chat style..."></div>
+<div class="line">4. I am a little bit jealous, to be honest. → <input class="inp wide" id="e52d" data-open placeholder="chat style..."></div>
+<div class="line">5. I would like to visit you in the summer. → <input class="inp wide" id="e52e" data-open placeholder="chat style..."></div>
+<div class="actions"><button class="btn primary" id="save52">Save answers</button><button class="btn ghost" id="show52">Show model</button></div>
+<div class="example hidden" id="model52"><b>Model:</b><br>1. No way!! That's epic news!<br>2. gotta go, mum's calling!<br>3. hit me up later! / ttyl<br>4. TBH I'm low-key jealous 😅<br>5. wanna visit you in summer!!</div>
+<div class="fb" id="fb52"></div>
+</article>
+<article class="card" data-a="c">
+<div class="card-top"><span class="exnum">EX 5.3</span><h3>The Messenger</h3><span class="badge smart">smart-check ⭐</span></div>
+<p class="instr"><b>Instructions:</b> write a chat reply to Mark (80–100 words). The checklist updates live as you type!</p>
+<div class="messenger">
+<div class="msg-header"><span class="online"></span> Mark · online</div>
+<div class="msg-body" id="msgBody"><div class="bubble in">Dude, guess what?! They made me captain of the football team! 🏆</div><div class="bubble in">And that's not all — we're moving to Brighton next month 😱 New house, new school, everything new... How's your life? Miss you!</div></div>
+<div class="msg-input"><textarea id="msgInput" placeholder="Type your reply…"></textarea><button class="send-btn" id="sendBtn">Send ➤</button></div>
+</div>
+<div class="word-counter" id="wordCounter">0 / 80–100 words</div>
+<div class="checklist-live" id="liveChecklist">
+<div class="ck-live" id="lk1"><span class="box"></span>Congratulated Mark</div>
+<div class="ck-live" id="lk2"><span class="box"></span>2 comparative questions</div>
+<div class="ck-live" id="lk3"><span class="box"></span>too / enough used</div>
+<div class="ck-live" id="lk4"><span class="box"></span>Digital Wellbeing word</div>
+<div class="ck-live" id="lk5"><span class="box"></span>4+ short forms</div>
+<div class="ck-live" id="lk6"><span class="box"></span>Informal ending</div>
+</div>
+<div class="actions"><button class="btn ghost" id="show53">Show example reply</button></div>
+<div class="example hidden" id="model53"><b>Example reply:</b><br>OMG no way!! 🤩 Congrats, mate! That's EPIC news! TBH I'm low-key jealous — I've always wanted to be captain 😅 Wait, Brighton?? Isn't it bigger than your old town? Is the new school as cool as your old one? My life is pretty crazy rn — my screen time is too high because of FOMO, and I don't get enough sleep. I really need to unplug this weekend! But I'm gonna visit you in summer!! gotta go, mum's calling! ttyl &amp; hit me up when you move! 🙌</div>
+<div class="fb" id="fb53"></div>
+</article>
+</section>
+
+<!-- BLOCK 6 -->
+<section class="block" id="b6">
+<div class="block-head" style="--acc:#6366f1"><h2><span class="dot"></span>Teacher Report</h2><p>Complete all 16 tasks to unlock the report. Written answers are saved automatically in this browser.</p></div>
+<article class="card" data-a="i">
+<div class="card-top"><span class="exnum">STATUS</span><h3>Task checklist</h3></div>
+<div class="checklist" id="checkList"></div>
+<div class="actions"><button class="btn primary" id="genReport">📄 Generate teacher report</button></div>
+<div class="fb" id="fbRep"></div>
+<div id="reportPanel"><pre id="reportPre"></pre>
+<div class="actions"><button class="btn primary" id="copyRep">Copy report</button><button class="btn ghost" id="dlRep">Download .txt</button><button class="btn ghost" id="printRep">Print</button></div>
+</div>
+</article>
+</section>
+</div>
+
+<script>
+window.onerror=function(msg,url,line){console.error('JS Error:',msg,'line',line);};
+(function(){
+'use strict';
+var $=function(s,r){return(r||document).querySelector(s);};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
+function safe(fn){try{fn();}catch(e){console.error('Block error:',e);}}
+
+var TASKS=['1.1','1.2','1.3','2.1','2.2','2.3','3.1','3.2','3.3','4.1','4.2','4.3','4.4','5.1','5.2','5.3'];
+var TASK_LABELS={'1.1':'Ex 1.1 Milestones Matching','1.2':'Ex 1.2 Adulthood Article','1.3':'Ex 1.3 Your Timeline','2.1':'Ex 2.1 Sort the Spectrum','2.2':'Ex 2.2 Compare Habits','2.3':'Ex 2.3 Problem-Solution','3.1':'Ex 3.1 Reading MC','3.2':'Ex 3.2 Match Words','3.3':'Ex 3.3 Grammar Hunt','4.1':'Ex 4.1 Comparatives Table','4.2':'Ex 4.2 Trad vs Modern','4.3':'Ex 4.3 Correct Mistake','4.4':'Ex 4.4 too-enough','5.1':'Ex 5.1 Chat Language','5.2':'Ex 5.2 Email-Chat','5.3':'Ex 5.3 Messenger Reply'};
+var BLOCK_TASKS={b1:['1.1','1.2','1.3'],b2:['2.1','2.2','2.3'],b3:['3.1','3.2','3.3'],b4:['4.1','4.2','4.3','4.4'],b5:['5.1','5.2','5.3']};
+var state={name:'',scores:{},open:{},done:{}};
+
+function persist(){try{localStorage.setItem('u3practice_v3',JSON.stringify(state));}catch(e){}}
+function restore(){try{var raw=localStorage.getItem('u3practice_v3');if(raw){var s=JSON.parse(raw);if(s&&typeof s==='object'){state.name=s.name||'';state.scores=s.scores||{};state.open=s.open||{};state.done=s.done||{};}}}catch(e){}}
+function fb(id,type,html){var el=$('#'+id);if(!el)return;el.className='fb show '+type;el.innerHTML=html;}
+function norm(v){return(v||'').toLowerCase().replace(/\s+/g,' ').trim();}
+function refresh(){
+  var done=TASKS.filter(function(t){return state.done[t];}).length;
+  var pf=$('#progFill');if(pf)pf.style.width=(done/TASKS.length*100)+'%';
+  var pt=$('#progText');if(pt)pt.textContent=done+' / '+TASKS.length+' tasks completed';
+  $$('.tab').forEach(function(tab){var t=tab.getAttribute('data-t');if(BLOCK_TASKS[t]){var all=BLOCK_TASKS[t].every(function(x){return state.done[x];});tab.classList.toggle('done',all);}});
+  var cl=$('#checkList');if(cl){cl.innerHTML='';TASKS.forEach(function(t){var d=document.createElement('div');d.className='ck'+(state.done[t]?' done':'');d.innerHTML='<span class="box">'+(state.done[t]?'\u2713':'')+'</span>'+TASK_LABELS[t];cl.appendChild(d);});}
+}
+function markDone(t){state.done[t]=true;persist();refresh();}
+
+/* TABS */
+safe(function(){$$('.tab').forEach(function(tab){tab.addEventListener('click',function(){$$('.tab').forEach(function(t){t.classList.remove('active');});$$('.block').forEach(function(b){b.classList.remove('active');});tab.classList.add('active');var target=$('#'+tab.getAttribute('data-t'));if(target)target.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});});});});
+
+/* OPEN ANSWERS */
+safe(function(){$$('[data-open]').forEach(function(el){if(state.open[el.id])el.value=state.open[el.id];el.addEventListener('input',function(){state.open[el.id]=el.value;persist();});});var ni=$('#studentName');if(ni){ni.value=state.name||'';ni.addEventListener('input',function(){state.name=ni.value;persist();});}});
+
+/* COVERS */
+safe(function(){
+  ['coverImg2','coverImg3'].forEach(function(id){var img=$('#'+id);if(img&&img.getAttribute('src')&&img.getAttribute('src').length>5){img.style.display='block';var ph=$('#'+id.replace('Img','Ph'));if(ph)ph.style.display='none';}});
+  function setupCover(n){var img=$('#coverImg'+n),ph=$('#coverPh'+n),file=$('#coverFile'+n);if(!file)return;file.addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){if(img){img.src=ev.target.result;img.style.display='block';}if(ph)ph.style.display='none';};r.readAsDataURL(f);});}
+  setupCover(2);setupCover(3);
+});
+
+/* ========== MATCHING — EVENT DELEGATION (FIXED) ========== */
+function setupMatching(leftSel,rightSel,checkId,resetId,fbId,total,task){
+  safe(function(){
+    var mMap={},mSel=null;
+    var leftContainer=$(leftSel);
+    var rightContainer=$(rightSel);
+    if(!leftContainer||!rightContainer)return;
+
+    // Single delegated listener on LEFT container
+    leftContainer.addEventListener('click',function(e){
+      var item=e.target.closest('.mitem');
+      if(!item||!leftContainer.contains(item))return;
+      $$(leftSel+' .mitem').forEach(function(x){x.classList.remove('sel');});
+      item.classList.add('sel');
+      mSel=item.getAttribute('data-k');
+    });
+
+    // Single delegated listener on RIGHT container
+    rightContainer.addEventListener('click',function(e){
+      var item=e.target.closest('.mitem');
+      if(!item||!rightContainer.contains(item))return;
+      if(!mSel)return;
+      mMap[mSel]=item.getAttribute('data-k');
+      var L=$(leftSel+' .mitem[data-k="'+mSel+'"]');
+      if(L){L.classList.add('paired');L.classList.remove('sel');}
+      item.classList.add('paired');
+      mSel=null;
+    });
+
+    $(checkId).addEventListener('click',function(){
+      var c=0;
+      for(var i=1;i<=total;i++){
+        var ok=mMap[i]===String(i);
+        var L=$(leftSel+' .mitem[data-k="'+i+'"]'),R=$(rightSel+' .mitem[data-k="'+i+'"]');
+        [L,R].forEach(function(el){if(el){el.classList.remove('ok','bad');el.classList.add(ok?'ok':'bad');}});
+        if(ok)c++;
+      }
+      state.scores[task]={c:c,t:total};markDone(task);
+      fb(fbId,c===total?'ok':'warn','<b>'+c+'/'+total+'</b> correct.'+(c===total?' Perfect! \ud83c\udf89':''));
+    });
+
+    $(resetId).addEventListener('click',function(){
+      mMap={};mSel=null;
+      $$(leftSel+' .mitem, '+rightSel+' .mitem').forEach(function(el){el.classList.remove('sel','paired','ok','bad');});
+      var f=$(fbId);if(f)f.className='fb';
+    });
+  });
+}
+setupMatching('#mLeft1','#mRight1','#check11','#reset11','#fb11',6,'1.1');
+setupMatching('#mLeft3','#mRight3','#check32','#reset32','#fb32',8,'3.2');
+setupMatching('#mLeft5','#mRight5','#check51','#reset51','#fb51',8,'5.1');
+
+/* GAP-FILL */
+function setupGaps(ids,checkId,resetId,fbId,task){
+  safe(function(){
+    $(checkId).addEventListener('click',function(){var c=0;ids.forEach(function(id){var el=$('#'+id);if(!el)return;var a=el.getAttribute('data-ans'),v=norm(el.value);el.classList.remove('ok','bad');if(v===norm(a)){el.classList.add('ok');c++;}else if(v){el.classList.add('bad');}});state.scores[task]={c:c,t:ids.length};markDone(task);fb(fbId,c===ids.length?'ok':'warn','<b>'+c+'/'+ids.length+'</b> correct.');});
+    $(resetId).addEventListener('click',function(){ids.forEach(function(id){var el=$('#'+id);if(el){el.value='';el.classList.remove('ok','bad');}});var f=$(fbId);if(f)f.className='fb';});
+  });
+}
+setupGaps(['c22a','c22b','c22c','c22d','c22e'],'#check22','#reset22','#fb22','2.2');
+setupGaps(['c42a','c42b','c42c','c42d','c42e','c42f','c42g'],'#check42','#reset42','#fb42','4.2');
+setupGaps(['e44a','e44b','e44c','e44d','e44e','e44f','e44g','e44h','e44i','e44j','e44k','e44l'],'#check44','#reset44','#fb44','4.4');
+setupGaps(['t41a','t41b','t41c','t41d','t41e','t41f'],'#check41','#reset41','#fb41','4.1');
+
+/* GRAMMAR HUNT */
+safe(function(){
+  var comps=['better','funnier','more interesting','more exhausted than','more stressful than'];
+  $('#check33').addEventListener('click',function(){var c=0;[['gh1','not as exciting as'],['gh2','not as perfect as'],['gh3','too many'],['gh6','the happiest']].forEach(function(p){var el=$('#'+p[0]);if(!el)return;var v=norm(el.value);el.classList.remove('ok','bad');if(v===norm(p[1])){el.classList.add('ok');c++;}else if(v){el.classList.add('bad');}});['gh4','gh5'].forEach(function(id){var el=$('#'+id);if(!el)return;var v=norm(el.value);el.classList.remove('ok','bad');if(comps.indexOf(v)>-1){el.classList.add('ok');c++;}else if(v){el.classList.add('bad');}});state.scores['3.3']={c:c,t:6};markDone('3.3');fb('fb33',c===6?'ok':'warn','<b>'+c+'/6</b> found.');});
+  $('#reset33').addEventListener('click',function(){['gh1','gh2','gh3','gh4','gh5','gh6'].forEach(function(id){var el=$('#'+id);if(el){el.value='';el.classList.remove('ok','bad');}});var f=$('#fb33');if(f)f.className='fb';});
+});
+
+/* MC */
+safe(function(){
+  $$('.mcq').forEach(function(q){$$('.opt',q).forEach(function(o){o.addEventListener('click',function(){$$('.opt',q).forEach(function(x){x.classList.remove('sel');});o.classList.add('sel');});});});
+  function gradeGroup(ex){var qs=$$('.mcq[data-ex="'+ex+'"]'),c=0;qs.forEach(function(q){var a=q.getAttribute('data-a'),sel=$('.opt.sel',q);$$('.opt',q).forEach(function(o){o.classList.remove('ok','bad');if(o.getAttribute('data-v')===a)o.classList.add('ok');});if(sel&&sel.getAttribute('data-v')===a)c++;else if(sel)sel.classList.add('bad');});return{c:c,t:qs.length};}
+  function resetGroup(ex){$$('.mcq[data-ex="'+ex+'"] .opt').forEach(function(o){o.classList.remove('sel','ok','bad');});}
+  $('#check31').addEventListener('click',function(){var r=gradeGroup('3.1');state.scores['3.1']=r;markDone('3.1');fb('fb31',r.c===r.t?'ok':'warn','<b>'+r.c+'/'+r.t+'</b> correct.');});
+  $('#reset31').addEventListener('click',function(){resetGroup('3.1');var f=$('#fb31');if(f)f.className='fb';});
+});
+
+/* DRAG-DROP TEXT GAPS (1.2) */
+safe(function(){
+  var draggedWord=null;
+  function bindDW(w){w.addEventListener('dragstart',function(e){draggedWord=this;try{e.dataTransfer.setData('text/plain',this.getAttribute('data-w'));}catch(ex){}setTimeout(function(){w.style.opacity='.5';},0);});w.addEventListener('dragend',function(){this.style.opacity='1';draggedWord=null;});w.addEventListener('touchstart',function(){draggedWord=this;this.style.opacity='.5';},{passive:true});w.addEventListener('touchend',function(e){this.style.opacity='1';try{var t=e.changedTouches[0];var tgt=document.elementFromPoint(t.clientX,t.clientY);if(tgt&&tgt.classList.contains('drop-zone')&&!tgt.classList.contains('filled'))fillZone(tgt,draggedWord);}catch(ex){}draggedWord=null;});}
+  function fillZone(zone,wordEl){if(!zone||!wordEl)return;zone.textContent=wordEl.textContent;zone.setAttribute('data-w',wordEl.getAttribute('data-w'));zone.classList.add('filled');wordEl.classList.add('placed');}
+  $$('#bank12 .drag-word').forEach(bindDW);
+  $$('#dropText12 .drop-zone').forEach(function(zone){zone.addEventListener('dragover',function(e){e.preventDefault();this.classList.add('hover');});zone.addEventListener('dragleave',function(){this.classList.remove('hover');});zone.addEventListener('drop',function(e){e.preventDefault();this.classList.remove('hover');if(draggedWord&&!this.classList.contains('filled'))fillZone(this,draggedWord);});zone.addEventListener('click',function(){if(this.classList.contains('filled')){var w=this.getAttribute('data-w');var bw=$$('#bank12 .drag-word').find(function(el){return el.getAttribute('data-w')===w;});if(bw)bw.classList.remove('placed');this.textContent='';this.classList.remove('filled','ok','bad');this.removeAttribute('data-w');}});});
+  $('#check12').addEventListener('click',function(){var c=0,t=6;$$('#dropText12 .drop-zone').forEach(function(z){var a=z.getAttribute('data-ans'),v=z.getAttribute('data-w');z.classList.remove('ok','bad');if(v===a){z.classList.add('ok');c++;}else if(v){z.classList.add('bad');}});state.scores['1.2']={c:c,t:t};markDone('1.2');fb('fb12',c===t?'ok':'warn','<b>'+c+'/'+t+'</b> correct.'+(c===t?' You read between the lines! \ud83d\udcf0':''));});
+  $('#reset12').addEventListener('click',function(){$$('#dropText12 .drop-zone').forEach(function(z){z.textContent='';z.classList.remove('filled','ok','bad');z.removeAttribute('data-w');});$$('#bank12 .drag-word').forEach(function(w){w.classList.remove('placed');});var f=$('#fb12');if(f)f.className='fb';});
+});
+
+/* SPECTRUM (2.1) */
+safe(function(){
+  var selChip=null;
+  function bindChip(chip){chip.addEventListener('click',function(ev){ev.stopPropagation();if(chip.parentElement&&chip.parentElement.classList.contains('drop')){var b=$('#bank21');if(b)b.appendChild(chip);chip.classList.remove('sel');selChip=null;return;}$$('#bank21 .chip').forEach(function(c){c.classList.remove('sel');});chip.classList.add('sel');selChip=chip;});}
+  $$('#bank21 .chip').forEach(bindChip);
+  ['#colUnhealthy','#colWarning','#colHealthy'].forEach(function(sel){var col=$(sel);if(!col)return;col.addEventListener('click',function(){if(!selChip)return;var d=col.querySelector('.drop');if(d)d.appendChild(selChip);selChip.classList.remove('sel');selChip=null;});col.addEventListener('mouseenter',function(){col.classList.add('hot');});col.addEventListener('mouseleave',function(){col.classList.remove('hot');});});
+  $('#check21').addEventListener('click',function(){var placed=$$('#colUnhealthy .drop .chip').length+$$('#colWarning .drop .chip').length+$$('#colHealthy .drop .chip').length;if(placed<10){fb('fb21','warn','Place all 10 words first ('+placed+'/10).');return;}state.scores['2.1']={c:10,t:10};markDone('2.1');fb('fb21','ok','Sorted! Notice how some words live in more than one column? \ud83d\udca1');});
+  $('#reset21').addEventListener('click',function(){$$('#colUnhealthy .drop .chip, #colWarning .drop .chip, #colHealthy .drop .chip').forEach(function(ch){var b=$('#bank21');if(b)b.appendChild(ch);});selChip=null;$$('#bank21 .chip').forEach(function(c){c.classList.remove('sel');});var f=$('#fb21');if(f)f.className='fb';});
+});
+
+/* PROBLEM-SOLUTION (2.3) */
+safe(function(){
+  var draggedSol=null;
+  $$('#bank23 .drag-word').forEach(function(w){w.addEventListener('dragstart',function(e){draggedSol=this;try{e.dataTransfer.setData('text/plain',this.getAttribute('data-w'));}catch(ex){}setTimeout(function(){w.style.opacity='.5';},0);});w.addEventListener('dragend',function(){this.style.opacity='1';draggedSol=null;});w.addEventListener('touchstart',function(){draggedSol=this;this.style.opacity='.5';},{passive:true});w.addEventListener('touchend',function(e){this.style.opacity='1';try{var t=e.changedTouches[0];var tgt=document.elementFromPoint(t.clientX,t.clientY);if(tgt&&tgt.classList.contains('ps-target')&&!tgt.classList.contains('filled'))fillPs(tgt,draggedSol);}catch(ex){}draggedSol=null;});});
+  function fillPs(target,solEl){if(!target||!solEl)return;target.textContent=solEl.textContent;target.setAttribute('data-w',solEl.getAttribute('data-w'));target.classList.add('filled');solEl.classList.add('placed');}
+  $$('.ps-target').forEach(function(tg){tg.addEventListener('dragover',function(e){e.preventDefault();});tg.addEventListener('drop',function(e){e.preventDefault();if(draggedSol&&!this.classList.contains('filled'))fillPs(this,draggedSol);});tg.addEventListener('click',function(){if(this.classList.contains('filled')){var w=this.getAttribute('data-w');var bw=$$('#bank23 .drag-word').find(function(el){return el.getAttribute('data-w')===w;});if(bw)bw.classList.remove('placed');this.textContent='drop solution here';this.classList.remove('filled','ok','bad');this.removeAttribute('data-w');}});});
+  $('#check23').addEventListener('click',function(){var c=0,t=4;$$('.ps-target').forEach(function(tg){var a=tg.getAttribute('data-ans'),v=tg.getAttribute('data-w');tg.classList.remove('ok','bad');if(v===a){tg.classList.add('ok');c++;}else if(v){tg.classList.add('bad');}});state.scores['2.3']={c:c,t:t};markDone('2.3');fb('fb23',c===t?'ok':'warn','<b>'+c+'/'+t+'</b> correct.'+(c===t?' Healthy habits unlocked! \ud83d\udfe2':''));});
+  $('#reset23').addEventListener('click',function(){$$('.ps-target').forEach(function(tg){tg.textContent='drop solution here';tg.classList.remove('filled','ok','bad');tg.removeAttribute('data-w');});$$('#bank23 .drag-word').forEach(function(w){w.classList.remove('placed');});var f=$('#fb23');if(f)f.className='fb';});
+});
+
+/* ERROR CORRECTION 4.3 */
+safe(function(){
+  var VAL43=[function(v){return/bigger house/.test(v);},function(v){return/\bthan\b/.test(v)&&!/that/.test(v);},function(v){return/most popular/.test(v);},function(v){return/\bquieter\b/.test(v);},function(v){return/\bhappiest\b/.test(v)&&!/most happiest/.test(v);},function(v){return/as tall as/.test(v);}];
+  $('#check43').addEventListener('click',function(){var c=0,empty=0;VAL43.forEach(function(fn,i){var el=$('#m43'+String.fromCharCode(97+i));if(!el)return;var v=norm(el.value);if(!v)empty++;var ok=fn(v);el.classList.remove('ok','bad');el.classList.add(ok?'ok':'bad');if(ok)c++;});if(empty>0){fb('fb43','warn','Fill in all 6 corrections first.');return;}state.scores['4.3']={c:c,t:6};markDone('4.3');fb('fb43',c===6?'ok':'warn','<b>'+c+'/6</b> fixed.');});
+  $('#show43').addEventListener('click',function(){var ans=['They live in a bigger house than us.','than','the most popular','quieter','happiest','as tall as'];ans.forEach(function(a,i){var el=$('#m43'+String.fromCharCode(97+i));if(el){el.value=a;el.classList.remove('bad');el.classList.add('ok');state.open[el.id]=a;}});persist();});
+});
+
+/* WRITING SAVES */
+safe(function(){
+  $('#save13').addEventListener('click',function(){var f=['t13a','t13b','t13c'].filter(function(id){var el=$('#'+id);return el&&el.value.trim().length>3;}).length;if(f<3){fb('fb13','warn','Answer all 3 questions first ('+f+'/3).');return;}markDone('1.3');fb('fb13','ok','Personal answers saved \u2713');});
+  $('#save52').addEventListener('click',function(){var f=['e52a','e52b','e52c','e52d','e52e'].filter(function(id){var el=$('#'+id);return el&&el.value.trim().length>2;}).length;if(f<5){fb('fb52','warn','Rewrite all 5 sentences first ('+f+'/5).');return;}markDone('5.2');fb('fb52','ok','Chat style saved \u2713');});
+  $('#show52').addEventListener('click',function(){var m=$('#model52');if(m)m.classList.toggle('hidden');});
+  $('#show53').addEventListener('click',function(){var m=$('#model53');if(m)m.classList.toggle('hidden');});
+});
+
+/* MESSENGER 5.3 */
+safe(function(){
+  var msgInput=$('#msgInput'),msgBody=$('#msgBody'),wordCounter=$('#wordCounter');
+  if(!msgInput)return;
+  function countWords(t){return t.trim().split(/\s+/).filter(function(x){return x.length>0;}).length;}
+  function liveCheck(){
+    var t=msgInput.value;var wc=countWords(t);
+    if(wordCounter){wordCounter.textContent=wc+' / 80\u2013100 words';wordCounter.classList.toggle('ok',wc>=70&&wc<=120);}
+    var checks={lk1:/no way|congrats|epic|awesome|well done|omg|wow|insane|lit/i.test(t),lk2:(t.match(/\w+(?:er|ier)\s+than|more\s+\w+\s+than|as\s+\w+\s+as/gi)||[]).length>=2,lk3:/\btoo\s+\w+|\w+\s+enough|enough\s+\w+/i.test(t),lk4:/screen time|fomo|unplug|detox|doomscroll|binge|notification|curated/i.test(t),lk5:(t.match(/\b(i'm|it's|that's|don't|doesn't|isn't|aren't|we're|they're|gonna|wanna|can't|won't|he's|she's|there's|mum's|dad's|i've|you're)\b/gi)||[]).length>=4,lk6:/gotta go|ttyl|hit me up|talk to you later|see ya|catch you later|speak soon/i.test(t)};
+    var allDone=true;Object.keys(checks).forEach(function(k){var el=$('#'+k);if(el){el.classList.toggle('done',checks[k]);if(!checks[k])allDone=false;}});
+    if(wc<70||wc>120)allDone=false;return allDone;
+  }
+  msgInput.addEventListener('input',function(){state.open['msg53']=msgInput.value;persist();liveCheck();});
+  if(state.open['msg53']){msgInput.value=state.open['msg53'];liveCheck();}
+  $('#sendBtn').addEventListener('click',function(){var t=msgInput.value.trim();if(countWords(t)<10){fb('fb53','warn','Write a real reply first (at least ~10 words).');return;}var existing=msgBody?msgBody.querySelector('.bubble.out'):null;if(existing)existing.remove();if(msgBody){var b=document.createElement('div');b.className='bubble out';b.textContent=t;msgBody.appendChild(b);msgBody.scrollTop=msgBody.scrollHeight;}state.open['msg53']=t;persist();var ok=liveCheck();markDone('5.3');fb('fb53',ok?'ok':'warn',ok?'Message sent! \ud83d\udce4 All checklist items complete \u2014 great job!':'Message sent! \ud83d\udce4 Some checklist items are still missing \u2014 check the list above.');});
+});
+
+/* REPORT */
+safe(function(){
+  var SCORE_LABELS={'1.1':'Ex 1.1 Milestones (6)','1.2':'Ex 1.2 Adulthood (6)','2.1':'Ex 2.1 Spectrum','2.2':'Ex 2.2 Compare (5)','2.3':'Ex 2.3 Problem-Sol (4)','3.1':'Ex 3.1 Reading (4)','3.2':'Ex 3.2 Words (8)','3.3':'Ex 3.3 Hunt (6)','4.1':'Ex 4.1 Table (6)','4.2':'Ex 4.2 Trad-Modern (7)','4.3':'Ex 4.3 Mistake (6)','4.4':'Ex 4.4 too-enough (12)','5.1':'Ex 5.1 Chat (8)'};
+  var OPEN_LABELS=[['t13a','Ex 1.3 Timeline Q1'],['t13b','Ex 1.3 Timeline Q2'],['t13c','Ex 1.3 Timeline Q3'],['m43a','Ex 4.3 Correction 1'],['m43b','Ex 4.3 Correction 2'],['m43c','Ex 4.3 Correction 3'],['m43d','Ex 4.3 Correction 4'],['m43e','Ex 4.3 Correction 5'],['m43f','Ex 4.3 Correction 6'],['e52a','Ex 5.2 Chat 1'],['e52b','Ex 5.2 Chat 2'],['e52c','Ex 5.2 Chat 3'],['e52d','Ex 5.2 Chat 4'],['e52e','Ex 5.2 Chat 5'],['msg53','Ex 5.3 Messenger Reply']];
+  function remaining(){return TASKS.filter(function(t){return!state.done[t];});}
+  function buildReport(){var L=[];L.push('\u041e\u0422\u0427\u0401\u0422 \u041f\u041e \u041f\u0420\u0410\u041a\u0422\u0418\u041a\u0415 \u00b7 UNIT 3 "MY WAY OF LIFE"');L.push('INTERACTIVE PRACTICE REPORT');L.push('==========================================');L.push('\u0421\u0442\u0443\u0434\u0435\u043d\u0442 / Student : '+(state.name||'\u2014'));L.push('\u0414\u0430\u0442\u0430 / Date       : '+new Date().toLocaleString('ru-RU'));var done=TASKS.filter(function(t){return state.done[t];}).length;L.push('\u041f\u0440\u043e\u0433\u0440\u0435\u0441\u0441          : '+done+' / '+TASKS.length);L.push('');L.push('--- \u0410\u0412\u0422\u041e\u041f\u0420\u041e\u0412\u0415\u0420\u041a\u0410 / AUTO-GRADED ---');Object.keys(SCORE_LABELS).forEach(function(k){var s=state.scores[k];L.push((s?(s.c+' / '+s.t):'not attempted')+'   '+SCORE_LABELS[k]);});L.push('');L.push('--- \u041f\u0418\u0421\u042c\u041c\u0415\u041d\u041d\u042b\u0415 / WRITTEN ---');['1.3','5.2','5.3'].forEach(function(t){L.push((state.done[t]?'[done \u2713]':'[not done \u2717]')+'   '+TASK_LABELS[t]);});L.push('');L.push('--- \u041e\u0422\u0412\u0415\u0422\u042b / STUDENT ANSWERS ---');OPEN_LABELS.forEach(function(p){var v=(state.open[p[0]]||'').trim();L.push('\u2022 '+p[1]+':');L.push('  '+(v?v:'(empty)'));L.push('');});L.push('==========================================');return L.join('\n');}
+  $('#genReport').addEventListener('click',function(){var rem=remaining();if(rem.length){fb('fbRep','warn','Complete first: '+rem.map(function(t){return TASK_LABELS[t];}).join('; '));return;}var rp=$('#reportPre');if(rp)rp.textContent=buildReport();var panel=$('#reportPanel');if(panel)panel.classList.add('show');fb('fbRep','ok','Report ready! Copy, download or print below.');if(panel)panel.scrollIntoView({behavior:'smooth',block:'start'});});
+  $('#copyRep').addEventListener('click',function(){var rp=$('#reportPre');if(!rp)return;var txt=rp.textContent;function fallback(){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}ta.remove();fb('fbRep','ok','Copied \u2713');}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){fb('fbRep','ok','Copied \u2713');},fallback);}else fallback();});
+  $('#dlRep').addEventListener('click',function(){var rp=$('#reportPre');if(!rp)return;var blob=new Blob([rp.textContent],{type:'text/plain;charset=utf-8'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Unit3_report.txt';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(a.href);fb('fbRep','ok','Downloaded \u2713');});
+  $('#printRep').addEventListener('click',function(){window.print();});
+});
+
+restore();
+$$('[data-open]').forEach(function(el){if(state.open[el.id])el.value=state.open[el.id];});
+var ni2=$('#studentName');if(ni2)ni2.value=state.name||'';
+refresh();
+})();
+</script>
+</body>
+</html>
+<img src="https://psv4.vkuserphoto.ru/s/v1/d2/ca3sYBBerJx28Hmxn4cszoxdcZ4HpPAZbz5I_unNtiviuBbEGFZQ0KL4e7Yxm_msiV2EbxLVkjqFwME2HLgrL7RxrIiA4Gz2d1UCHoYfFUjrBgGFYRo5F-kd5EzwIqp5AgzN1DrX6AK_/Snimok_ekrana_2026-10-01_v_18_47_10.png" alt="" id="coverImg2" style="display:none">
+<img src="https://psv4.vkuserphoto.ru/s/v1/d2/TcTCIpOhlzq6GUSI-FJPMnSQ07ADxc2f9YHXM7x5AtLrup4kD4lUMqhzocs0fQ4NWCVC2_ukE_NG_uKOQUWedPCXuqFKYwFro62JZObZqOES5YpQFXlALc0GnsVB6vS5tbuFsvjX10HA/Snimok_ekrana_2026-10-01_v_18_46_17.png" alt="" id="coverImg3" style="display:none">
