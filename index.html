@@ -217,28 +217,61 @@ textarea.inp{min-height:110px;resize:vertical;line-height:1.6}
 .web-dot{width:12px;height:12px;border-radius:50%;}
 .web-dot.r{background:#ef4444}.web-dot.y{background:#f59e0b}.web-dot.g{background:#10b981}
 .web-url{background:#fff;border:1px solid #cbd5e1;border-radius:6px;padding:4px 12px;font-size:.8rem;color:#64748b;flex:1;font-family:monospace;}
-.web-body{padding:30px;font-family:'Lora',serif;color:#334155;line-height:1.8;font-size:1.05rem;}
-.web-body h2{font-family:'Space Grotesk',sans-serif;font-size:1.8rem;color:#0f172a;margin-bottom:16px;border-bottom:2px solid #e2e8f0;padding-bottom:8px;}
-.web-body p{margin-bottom:16px;}
 
-/* NEW: IMAGE PLACEHOLDER IN ARTICLE */
+/* FIX: FORCE LOA FONT FOR ALL TEXT INSIDE ARTICLE */
+.web-body {
+    padding: 30px;
+    font-family: 'Lora', Georgia, serif !important; /* Force Serif everywhere */
+    color: #334155;
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+/* Ensure headers inside article also use clean sans-serif for contrast if needed, or keep serif */
+.web-body h2 {
+    font-family: 'Space Grotesk', sans-serif; /* Keep header modern */
+    font-size: 1.8rem;
+    color: #0f172a;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
+}
+.web-body p {
+    margin-bottom: 16px;
+    text-align: justify; /* Makes it look like a real newspaper column */
+}
+/* Style the drop zones to blend in with the serif text */
+.web-body .drop-zone {
+    font-family: inherit; /* Inherit Lora from parent */
+    background: transparent;
+    border-bottom: 2px dotted #94a3b8; /* Subtle dots instead of dashes */
+    min-width: 120px;
+}
+.web-body .drop-zone.filled {
+    background: #f1f5f9;
+    border-bottom: 2px solid #64748b;
+    font-weight: 600;
+}
+
+/* NEW: CLEAN IMAGE PLACEHOLDER (NO BORDER) */
 .article-image-placeholder {
     float: left;
     width: 180px;
     height: 180px;
     margin: 0 20px 15px 0;
-    border: 2px dashed #cbd5e1;
+    /* REMOVED BORDER HERE */
+    border: none; 
     border-radius: 12px;
     background: #f8fafc;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #64748b;
+    color: #94a3b8;
     font-size: 0.85rem;
     font-weight: 600;
     overflow: hidden;
     position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Soft shadow instead of border */
 }
 .article-image-placeholder img {
     width: 100%;
@@ -361,10 +394,7 @@ textarea.inp{min-height:110px;resize:vertical;line-height:1.6}
         </div>
 
         <h2>WHEN DOES ADULTHOOD BEGIN?</h2>
-        <p>At what point can a teenager really take control of their life and start being responsible for it? There's no single answer — everyone grows up at their own speed.
-        For some, the first real step is money: they <span class="drop-zone" data-id="dz1_1" data-ans="start a side hustle"></span> — maybe selling handmade crafts online or walking dogs — and feel proud when they <span class="drop-zone" data-id="dz1_2" data-ans="get your first paycheck"></span>. That first bit of earned money changes how you see yourself.
-        But responsibility isn't only about cash. The biggest question of all is identity: who am I, and what's my path? Many teens need time to <span class="drop-zone" data-id="dz1_3" data-ans="figure out what you want to do"></span> before the pressure of exams and university begins. That's why some choose to <span class="drop-zone" data-id="dz1_4" data-ans="take a gap year"></span> — to travel, volunteer, or simply breathe and think.
-        And one day, the final milestone arrives: you pack your bags and <span class="drop-zone" data-id="dz1_5" data-ans="move out"></span>. You are finally able to <span class="drop-zone" data-id="dz1_6" data-ans="be independent"></span>. Your life, your rules, your responsibility.</p>
+        <p>At what point can a teenager really take control of their life and start being responsible for it? There's no single answer — everyone grows up at their own speed. For some, the first real step is money: they <span class="drop-zone" data-id="dz1_1" data-ans="start a side hustle"></span> — maybe selling handmade crafts online or walking dogs — and feel proud when they <span class="drop-zone" data-id="dz1_2" data-ans="get your first paycheck"></span>. That first bit of earned money changes how you see yourself. But responsibility isn't only about cash. The biggest question of all is identity: who am I, and what's my path? Many teens need time to <span class="drop-zone" data-id="dz1_3" data-ans="figure out what you want to do"></span> before the pressure of exams and university begins. That's why some choose to <span class="drop-zone" data-id="dz1_4" data-ans="take a gap year"></span> — to travel, volunteer, or simply breathe and think. And one day, the final milestone arrives: you pack your bags and <span class="drop-zone" data-id="dz1_5" data-ans="move out"></span>. You are finally able to <span class="drop-zone" data-id="dz1_6" data-ans="be independent"></span>. Your life, your rules, your responsibility.</p>
         <p><i>So — which of these milestones feels like the biggest step to you?</i></p>
     </div>
 </div>
@@ -657,8 +687,8 @@ var TASK_LABELS={'1.1':'Ex 1.1 Milestones Matching','1.2':'Ex 1.2 Adulthood Arti
 var BLOCK_TASKS={b1:['1.1','1.2','1.3'],b2:['2.1','2.2','2.3'],b3:['3.1','3.2','3.3'],b4:['4.1','4.2','4.3','4.4'],b5:['5.1','5.2','5.3']};
 var state={name:'',scores:{},open:{},done:{},drag:{},chips:{}};
 
-function persist(){try{localStorage.setItem('u3practice_v7_dd',JSON.stringify(state));}catch(e){}}
-function restore(){try{var raw=localStorage.getItem('u3practice_v7_dd');if(raw){var s=JSON.parse(raw);if(s&&typeof s==='object'){state.name=s.name||'';state.scores=s.scores||{};state.open=s.open||{};state.done=s.done||{};state.drag=s.drag||{};state.chips=s.chips||{};}}}catch(e){}}
+function persist(){try{localStorage.setItem('u3practice_v9_clean',JSON.stringify(state));}catch(e){}}
+function restore(){try{var raw=localStorage.getItem('u3practice_v9_clean');if(raw){var s=JSON.parse(raw);if(s&&typeof s==='object'){state.name=s.name||'';state.scores=s.scores||{};state.open=s.open||{};state.done=s.done||{};state.drag=s.drag||{};state.chips=s.chips||{};}}}catch(e){}}
 function fb(id,type,html){var el=$('#'+id);if(!el)return;el.className='fb show '+type;el.innerHTML=html;}
 function norm(v){return(v||'').toLowerCase().replace(/\s+/g,' ').trim();}
 function refresh(){
